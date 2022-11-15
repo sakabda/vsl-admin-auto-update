@@ -22,8 +22,10 @@
     "dist-64": "electron-builder -w",
     "dist-32": "electron-builder -w --ia32",
     "dist-lin": "electron-builder -l",
-    "pack": "build --dir"
+    "pack": "build --dir",
+    "deploy": "electron-builder build  --l --publish always"
   },
+  "repository": "https://github.com/sakabda/vsl-admin-auto-update",
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.4",
@@ -95,6 +97,12 @@
     "files": [
       "**/*",
       "dist/**/*"
-    ]
+    ],
+    "publish": [
+      {
+          "provider": "github",
+          "owner": "sakabda",
+          "repo": "vsl-admin-auto-update"
+      }]
   }
 }

@@ -1,0 +1,1441 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate
+      ? 'Daily Report - Manoeuvring Departure [Edit]'
+      : 'Daily Report - Manoeuvring Departure [New]'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      (click)="submit()"
+    >
+      Save
+    </button>
+    <a routerLink="/main/machinery-report/daily-report-dashboard"
+      ><button nz-button class="btncls">Back</button></a
+    >
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form
+  class="noonForm dailyReport"
+  nz-form
+  [formGroup]="addUpdateDailyReportReportForm"
+>
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Time Period" class="card-box-sm">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div
+            nz-col
+            class="gutter-row"
+            [nzMd]="7"
+            [nzSm]="24"
+            style="padding-right: 0px !important"
+          >
+            <nz-form-item>
+              <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                >Start date & time
+              </nz-form-label>
+
+              <nz-form-control
+                [nzMd]="11"
+                [nzSm]="24"
+                nzErrorTip=""
+                style="padding-left: 12px"
+              >
+                <nz-date-picker
+                  style="width: 100%"
+                  nzFormat="dd/MM/YYYY"
+                  formControlName="DailyRept_VslActivity_Manoeuvring_Departure_StartDate"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+            <nz-form-item
+              ><nz-form-control
+                [nzMd]="20"
+                [nzSm]="24"
+                nzErrorTip=""
+                style="padding-left: 22px"
+              >
+                <nz-time-picker
+                  style="width: 100%"
+                  [nzUse12Hours]="false"
+                  nzFormat="HH:mm"
+                  formControlName="DailyRept_VslActivity_Manoeuvring_Departure_StartTime"
+                >
+                </nz-time-picker> </nz-form-control
+            ></nz-form-item>
+          </div>
+
+          <div
+            nz-col
+            class="gutter-row"
+            [nzMd]="7"
+            [nzSm]="24"
+            style="padding-right: 0px !important"
+          >
+            <nz-form-item>
+              <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                >End date & time
+              </nz-form-label>
+
+              <nz-form-control
+                [nzMd]="11"
+                [nzSm]="24"
+                nzErrorTip=""
+                style="padding-left: 12px"
+              >
+                <nz-date-picker
+                  style="width: 100%"
+                  nzFormat="dd/MM/YYYY"
+                  formControlName="DailyRept_VslActivity_Manoeuvring_Departure_EndDate"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+            <nz-form-item
+              ><nz-form-control
+                [nzMd]="20"
+                [nzSm]="24"
+                nzErrorTip=""
+                style="padding-left: 22px"
+              >
+                <nz-time-picker
+                  style="width: 100%"
+                  [nzUse12Hours]="false"
+                  nzFormat="HH:mm"
+                  formControlName="DailyRept_VslActivity_Manoeuvring_Departure_EndTime"
+                >
+                </nz-time-picker> </nz-form-control
+            ></nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Manoeuvring [Departure] -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <!-- <h3 style="font-weight: normal; color: #7d7d7d">
+        Manoeuvring [Departure]
+      </h3> -->
+      <nz-card class="card-box-sm" nzTitle="Voyage Details">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Voyage Number</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_VoyDetails_VoyNo"
+                  placeholder=" Enter Voyage Number"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Distance - Sea [NM]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_VoyDetails_DistOverSea"
+                  placeholder=" Enter Distance - Sea [NM]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Distance - Ground [NM]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_VoyDetails_DistOverGrnd"
+                  placeholder=" Enter Distance - Ground [NM]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Avg. Speed [knots]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_VoyDetails_AvgSpeed"
+                  placeholder=" Enter Avg. Speed [knots]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Manoeuvring [Departure](Weather Info.) -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="Weather Info.">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Sea Water [°C]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_WeatherInfo_SeaWaterTemp"
+                  placeholder=" Enter Sea Water [°C]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Engine Room [°C]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_WeatherInfo_ERTemp"
+                  placeholder=" Enter Engine Room [°C]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Outside Temp. [°C]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_WeatherInfo_OutsideTemp"
+                  placeholder=" Enter Outside Temp. [°C]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Outside Humidity [%]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_WeatherInfo_OutsideHumidity"
+                  placeholder=" Enter Outside Humidity [%]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Manoeuvring [Departure](Main Engine Info) -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="Main Engine Info">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Average Load [kW]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MEInfo_MEAvgLoad"
+                  placeholder=" Enter Average Load [kW]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Average RPM</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MEInfo_MEAvgRPM"
+                  placeholder=" Enter Average RPM"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Average Load [%]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MEInfo_MEAvgLoadPercent"
+                  placeholder=" Enter Average Load [%]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Running hrs [Rhrs]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MEInfo_MERhrs"
+                  placeholder=" Enter Running hrs [Rhrs]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+
+          <div
+            nz-col
+            class="gutter-row"
+            [nzMd]="7"
+            [nzSm]="24"
+            style="padding-right: 0px !important"
+          >
+            <nz-form-item>
+              <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                >Running hrs [Rhrs]</nz-form-label
+              >
+
+              <nz-form-control
+                [nzMd]="11"
+                [nzSm]="24"
+                nzErrorTip=""
+                style="padding-left: 18px"
+              >
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MEInfo_MERhrs"
+                  placeholder="From Last Report [Rhrs]"
+                  [ngClass]="{
+                    customBorder: borderColor == 'true',
+                    defaultBorder: borderColor == 'false'
+                  }"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+            <nz-form-item
+              ><nz-form-control
+                [nzMd]="20"
+                [nzSm]="24"
+                nzErrorTip=""
+                style="padding-left: 18px; padding-right: 2px"
+              >
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MEInfo_MERhrs_TotalCounter"
+                  placeholder="Total Counter [Rhrs]"
+                  [ngClass]="{
+                    customBorder: borderColor == 'true',
+                    defaultBorder: borderColor == 'false'
+                  }"
+                /> </nz-form-control
+            ></nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Manoeuvring [Departure](Main Engine – Consumption) -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="Main Engine – Consumption">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel Cons. [MT]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MECons_FuelCons"
+                  placeholder=" Enter Fuel Cons. [MT]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel in use</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <nz-select
+                  style="width: 100%"
+                  formControlName="DailyRept_ManoeuvringDeparture_MECons_Fuelinuse"
+                  nzPlaceHolder="Select"
+                >
+                  <nz-option
+                    *ngFor="let data of allBunkerStockReports"
+                    nzValue="{{ data._id }}"
+                    nzLabel="{{ data.Fuel_Type }}_{{
+                      data.Location_Of_Fuel_Bunkered
+                    }}_{{
+                      data.Start_Date_Of_Fuel_Bunkered | date: 'dd/MMM/yy'
+                    }}"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Cyl. Oil Cons. [Ltrs]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MECons_CylOilCons"
+                  placeholder=" Enter Cyl. Oil Cons. [Ltrs]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Cyl. L.O. BN</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MECons_CylLOBN"
+                  placeholder=" Enter Cyl. L.O. BN"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Sys. Oil Cons. [Ltrs]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_MECons_SysOilConsLtrs"
+                  placeholder=" Enter Sys. Oil Cons. [Ltrs]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Manoeuvring [Departure] (Aux. Engine - Consumption -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="Aux. Engine - Consumption ">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <!-- ONE (4)-->
+          <ng-container
+            *ngIf="
+              localUser?.IMO_No === '9741413' ||
+              localUser?.IMO_No === '9741437' ||
+              localUser?.Unique_Group === 'ONE'
+            "
+          >
+            <!-- <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 1 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE1RHRS"
+                    placeholder=" Enter Aux. Eng. 1 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 1 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 1 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE1RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE1RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 1 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons1"
+                    placeholder=" Enter Lub. Oil Cons. 1 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- 
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 2 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE2RHRS"
+                    placeholder=" Enter Aux. Eng. 2 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 2 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 2 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE2RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE2RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 2 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons2"
+                    placeholder=" Enter Lub. Oil Cons. 2 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- 
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 3 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE3RHRS"
+                    placeholder=" Enter Aux. Eng. 3 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 3 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 3 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE3RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE3RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 3 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons3"
+                    placeholder=" Enter Lub. Oil Cons. 3 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 4 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE4RHRS"
+                    placeholder=" Enter Aux. Eng. 4 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 4 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 4 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE4RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE4RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 4 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons4"
+                    placeholder=" Enter Lub. Oil Cons. 4 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </ng-container>
+          <!-- AAL, AAL_01, FRONT, CAPE, NORDIC, NORDIC_01, STH, STH_01, STAR  (3)-->
+
+          <ng-container
+            *ngIf="
+              localUser?.Unique_Group === 'AAL' ||
+              localUser?.Unique_Group === 'AAL_01' ||
+              localUser?.Unique_Group === 'FRONT' ||
+              localUser?.Unique_Group === 'CAPE' ||
+              localUser?.Unique_Group === 'NORDIC' ||
+              localUser?.Unique_Group === 'NORDIC_01' ||
+              localUser?.Unique_Group === 'STH' ||
+              localUser?.Unique_Group === 'STH_01' ||
+              localUser?.Unique_Group === 'STAR'
+            "
+          >
+            <!-- <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 1 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE1RHRS"
+                    placeholder=" Enter Aux. Eng. 1 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 1 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 1 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE1RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE1RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 1 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons1"
+                    placeholder=" Enter Lub. Oil Cons. 1 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 2 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE2RHRS"
+                    placeholder=" Enter Aux. Eng. 2 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 2 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 2 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE2RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE2RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 2 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons2"
+                    placeholder=" Enter Lub. Oil Cons. 2 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Aux. Eng. 3 [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE3RHRS"
+                    placeholder=" Enter Aux. Eng. 3 [Rhrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <!-- Aux Engine 3 -->
+
+            <div
+              nz-col
+              class="gutter-row"
+              [nzMd]="7"
+              [nzSm]="24"
+              style="padding-right: 0px !important"
+            >
+              <nz-form-item>
+                <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="vesselName"
+                  >A.E. 3 Last Report/Total [Rhrs]</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="11"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE3RHRS"
+                    placeholder="From Last Report [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row paddingAdj" [nzMd]="5" [nzSm]="24">
+              <nz-form-item
+                ><nz-form-control
+                  [nzMd]="20"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 18px; padding-right: 2px"
+                >
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_AE3RHRS_TotalCounter"
+                    placeholder="Total Counter [Rhrs]"
+                    [ngClass]="{
+                      customBorder: borderColor == 'true',
+                      defaultBorder: borderColor == 'false'
+                    }"
+                  /> </nz-form-control
+              ></nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil Cons. 3 [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyRept_ManoeuvringDeparture_AECons_LOCons3"
+                    placeholder=" Enter Lub. Oil Cons. 3 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </ng-container>
+
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Total Load (kW)</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_AECons_TotalAELoad"
+                  placeholder=" Enter Total Load (kW)"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Reefer Cons. [kW]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_AECons_ReeferCons"
+                  placeholder=" Enter Reefer Cons. [kW]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel Cons. [MT]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_AECons_TotalAEFuelCons"
+                  placeholder=" Enter Fuel Cons. [MT]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel in use</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <nz-select
+                  style="width: 100%"
+                  formControlName="DailyRept_ManoeuvringDeparture_AECons_FuelInUse"
+                  nzPlaceHolder="Select"
+                >
+                  <nz-option
+                    *ngFor="let data of allBunkerStockReports"
+                    nzValue="{{ data._id }}"
+                    nzLabel="{{ data.Fuel_Type }}_{{
+                      data.Location_Of_Fuel_Bunkered
+                    }}_{{
+                      data.Start_Date_Of_Fuel_Bunkered | date: 'dd/MMM/yy'
+                    }}"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- At Manoeuvring Arrival (Aux comments) -->
+          <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="4" [nzSm]="24" nzFor="vesselName">
+                Add. Comments
+              </nz-form-label>
+              <nz-form-control [nzMd]="19" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="DailyRept_ManoeuvringDeparture_AECons_AddComments"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!-- ManoeuvringDeparture (Boiler – Consumption -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="Boiler – Consumption ">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel Cons. [MT]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyRept_ManoeuvringDeparture_BLRCons_TotalFuelCons"
+                  placeholder=" Enter Fuel Cons. [MT]"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel in use</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <nz-select
+                  style="width: 100%"
+                  formControlName="DailyRept_ManoeuvringDeparture_BLRCons_FuelInUse"
+                  nzPlaceHolder="Select"
+                >
+                  <nz-option
+                    *ngFor="let data of allBunkerStockReports"
+                    nzValue="{{ data._id }}"
+                    nzLabel="{{ data.Fuel_Type }}_{{
+                      data.Location_Of_Fuel_Bunkered
+                    }}_{{
+                      data.Start_Date_Of_Fuel_Bunkered | date: 'dd/MMM/yy'
+                    }}"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="General Comments">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Man. Dep.
+            </span>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-control [nzMd]="23" [nzSm]="24" nzErrorTip="">
+                <textarea
+                  nz-input
+                  formControlName="DailyRept_ManoeuvringDeparture_Gen_Comments"
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      style="margin-right: 12px"
+      (click)="submit()"
+    >
+      Save
+    </button>
+
+    <a routerLink="/main/machinery-report/daily-report-dashboard"
+      ><button nz-button nzType="primary" class="btncls">Back</button></a
+    >
+  </div>
+</form>

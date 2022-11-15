@@ -1,0 +1,409 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate ? 'Update Bunkering Report' : 'Add New Bunkering Report'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      (click)="submit()"
+    >
+      Save
+    </button>
+    <!-- <button nz-button class="btncls">Sync</button> -->
+    <a routerLink="/main/bunker-stock-report/bunker-report"
+      ><button nz-button class="btncls">Back</button></a
+    >
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form [formGroup]="addUpdateBunkerStockReportForm">
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Bunker Data">
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel Grade</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="Fuel_Grade"
+                  type="text"
+                  placeholder=" Enter Fuel Grade"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="imo"
+                >Fuel Type
+              </nz-form-label>
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <nz-select nzPlaceHolder="Select" formControlName="Fuel_Type">
+                  <nz-option
+                    nzValue="HSFO [3.5%]"
+                    nzLabel="HSFO [3.5%]"
+                  ></nz-option>
+                  <nz-option
+                    nzValue="VLSFO [0.5%]"
+                    nzLabel="VLSFO [0.5%]"
+                  ></nz-option>
+                  <nz-option
+                    nzValue="ULSFO [0.1%]"
+                    nzLabel="ULSFO [0.1%]"
+                  ></nz-option>
+
+                  <nz-option
+                    nzValue="LSGO [0.1%]"
+                    nzLabel="LSGO [0.1%]"
+                  ></nz-option>
+                  <nz-option
+                    nzValue="MGO [0.5%]"
+                    nzLabel="MGO [0.5%]"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Viscosity @50°C [CST]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="Viscosity_At_50_Degree_Celcius"
+                  type="text"
+                  placeholder=" Enter Viscosity"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="imo"
+                >Quantity Bunkered [MT]
+              </nz-form-label>
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  formControlName="Quantity_Of_Fuel_Bunkered"
+                  type="text"
+                  placeholder=" Enter Quantity"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Density @15°C [kg/m<sup>3</sup>]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="Density_At_15_Degree_Celcius"
+                  type="text"
+                  placeholder=" Enter Density"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <div nz-row nzGutter="16">
+              <div nz-col [nzMd]="15">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="imo"
+                    >Start Date & Time
+                  </nz-form-label>
+
+                  <nz-form-control [nzMd]="10" [nzSm]="24" nzErrorTip="">
+                    <nz-date-picker
+                      style="width: 100%"
+                      formControlName="Start_Date_Of_Fuel_Bunkered"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzMd]="9">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="17" [nzOffset]="1" [nzSm]="24">
+                    <nz-time-picker
+                      style="width: 100%"
+                      [ngModel]="time"
+                      [nzUse12Hours]="false"
+                      nzFormat="HH:mm"
+                      formControlName="Start_Time_Of_Fuel_Bunkered"
+                    ></nz-time-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Sulphur [%]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="Sulphur_Percentage_In_Bunkered_Fuel"
+                  type="text"
+                  placeholder=" Enter Sulphur"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <div nz-row nzGutter="16">
+              <div nz-col [nzMd]="15">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="13" [nzSm]="24" nzFor="imo"
+                    >End Date & Time
+                  </nz-form-label>
+
+                  <nz-form-control [nzMd]="10" [nzSm]="24" nzErrorTip="">
+                    <nz-date-picker
+                      style="width: 100%"
+                      formControlName="End_Date_Of_Fuel_Bunkered"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzMd]="9">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="17" [nzOffset]="1" [nzSm]="24">
+                    <nz-time-picker
+                      style="width: 100%"
+                      [ngModel]="time"
+                      [nzUse12Hours]="false"
+                      nzFormat="HH:mm"
+                      formControlName="End_Time_Of_Fuel_Bunkered"
+                    ></nz-time-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Water Content [%]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="Water_Percentage_In_Bunkered_Fuel"
+                  type="text"
+                  placeholder=" Enter Water Content"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="imo"
+                >Barge Name
+              </nz-form-label>
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="Barge_Name_Of_Fuel_Bunkered"
+                  type="text"
+                  placeholder=" Enter Barge Name"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Cat Fines [Al+Si ppm]</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="CAT_Fines_AL_Si_Percentage_In_Bunkered_Fuel"
+                  type="text"
+                  placeholder=" Enter CAT Fines"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="imo"
+                >Bunker Location
+              </nz-form-label>
+
+              <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  formControlName="Location_Of_Fuel_Bunkered"
+                  type="text"
+                  placeholder=" Enter Bunker Location"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- image fields -->
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Bunker Delivery Note</nz-form-label
+              >
+              <nz-form-control [nzMd]="6" [nzSm]="24" nzErrorTip="">
+                <nz-upload
+                  class="avatar-uploader upload100"
+                  nzName="avatar"
+                  [nzShowUploadList]="false"
+                  [nzBeforeUpload]="beforeUpload"
+                  (nzChange)="handleUpload($event)"
+                  [nzAction]="mediaUploadUrl"
+                  [nzName]="'file'"
+                >
+                  <ng-container>
+                    <button nz-button style="width: 100%; border-radius: 5px">
+                      <i
+                        class="upload-icon"
+                        nz-icon
+                        [nzType]="imgLoading ? 'loading' : 'plus'"
+                      ></i
+                      >Upload
+                    </button>
+                  </ng-container>
+                </nz-upload>
+              </nz-form-control>
+              <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+                <div
+                  style="
+                    display: inline-block;
+                    padding-top: 6px;
+                    padding-left: 6px;
+                  "
+                  *ngIf="fileObject"
+                >
+                  <span
+                    ><a href="{{ mediaPreviewUrl }}{{ fileObject.path }}">{{
+                      fileObject.originalname
+                    }}</a></span
+                  >
+                </div>
+              </div>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Fuel Analysis Report</nz-form-label
+              >
+              <nz-form-control [nzMd]="6" [nzSm]="24" nzErrorTip="">
+                <nz-upload
+                  class="avatar-uploader upload100"
+                  nzName="avatar"
+                  [nzShowUploadList]="false"
+                  [nzBeforeUpload]="beforeUpload2"
+                  (nzChange)="handleUpload2($event)"
+                  [nzAction]="mediaUploadUrl"
+                  [nzName]="'file'"
+                >
+                  <ng-container>
+                    <button nz-button style="width: 100%; border-radius: 5px">
+                      <i
+                        class="upload-icon"
+                        nz-icon
+                        [nzType]="imgLoading ? 'loading' : 'plus'"
+                      ></i
+                      >Upload
+                    </button>
+                  </ng-container>
+                </nz-upload>
+              </nz-form-control>
+              <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+                <div
+                  style="
+                    display: inline-block;
+                    padding-top: 6px;
+                    padding-left: 6px;
+                  "
+                  *ngIf="fileObject2"
+                >
+                  <span
+                    ><a href="{{ mediaPreviewUrl }}{{ fileObject2.path }}">{{
+                      fileObject2.originalname
+                    }}</a></span
+                  >
+                </div>
+              </div>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Remarks-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Additional Comments">
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+            <nz-form-item>
+              <textarea
+                nz-input
+                formControlName="Additional_Comments_Of_Fuel_Bunkered"
+                placeholder="Additional Comments"
+              ></textarea>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      (click)="submit()"
+    >
+      Save
+    </button>
+    <!-- <button nz-button class="btncls">Sync</button> -->
+    <a routerLink="/main/bunker-stock-report/bunker-report"
+      ><button
+        nz-button
+        nzType="primary"
+        class="btncls"
+        style="margin-left: 12px"
+      >
+        Back
+      </button></a
+    >
+  </div>
+</form>

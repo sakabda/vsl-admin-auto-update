@@ -1,0 +1,146 @@
+<nz-page-header class="site-page-header" nzTitle="Add New Report">
+  <nz-page-header-extra>
+    <a routerLink="/main/machinery-report/daily-report"
+      ><button nz-button class="btncls" style="margin-right: 8px">Back</button>
+    </a></nz-page-header-extra
+  >
+</nz-page-header>
+<ng-container *ngIf="localUser?.Unique_Group === 'SUPPLY'; else supplyNotBlock">
+  <div nz-row nzGutter="10" class="feedRow001" style="margin-bottom: 20px">
+    <div nz-col class="ant-col-grid-5">
+      <nz-card class="dashboard-card">
+        <a routerLink="/main/machinery-report/daily-report-at-port/add">
+          <p>
+            <img alt="example" src="assets/images/New daily1.png" />
+          </p>
+          <h4>At Port</h4>
+          <p>Logging of parameters when vessel at port</p>
+        </a>
+      </nz-card>
+    </div>
+    <div nz-col class="ant-col-grid-5">
+      <nz-card class="dashboard-card">
+        <a routerLink="/main/machinery-report/daily-report-at-anchorage/add">
+          <p>
+            <img alt="example" src="assets/images/New daily1.png" />
+          </p>
+          <h4>At Anchorage</h4>
+          <p>Logging of parameters when vessel at anchorage</p>
+        </a>
+      </nz-card>
+    </div>
+    <div nz-col class="ant-col-grid-5">
+      <nz-card class="dashboard-card">
+        <a routerLink="/main/machinery-report/daily-report-drifting/add">
+          <p>
+            <img alt="example" src="assets/images/New daily1.png" />
+          </p>
+          <h4>Drifting</h4>
+          <p>Logging of parameters when vessel is drifting</p>
+        </a>
+      </nz-card>
+    </div>
+    <div nz-col class="ant-col-grid-5">
+      <nz-card class="dashboard-card">
+        <a routerLink="/main/machinery-report/daily-report-manoeuvring/add">
+          <p>
+            <img alt="example" src="assets/images/New daily1.png" />
+          </p>
+          <h4>Manoeuvring</h4>
+          <p>Logging of parameters when vessel is manoeuvring</p>
+        </a>
+      </nz-card>
+    </div>
+  </div>
+</ng-container>
+<ng-template #supplyNotBlock>
+  <ng-container>
+    <div nz-row nzGutter="10" class="feedRow001" style="margin-bottom: 20px">
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a routerLink="/main/machinery-report/daily-report-at-sea/add">
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>At Sea</h4>
+            <p>Logging of parameters when vessel at sea</p>
+          </a>
+        </nz-card>
+      </div>
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a
+            routerLink="/main/machinery-report/daily-report-fuel-changeover/add"
+          >
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>Fuel Changeover</h4>
+            <p>Logging of parameters when changing fuel</p>
+          </a>
+        </nz-card>
+      </div>
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a routerLink="/main/machinery-report/daily-report-at-port/add">
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>At Port</h4>
+            <p>Logging of parameters when vessel at port</p>
+          </a>
+        </nz-card>
+      </div>
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a routerLink="/main/machinery-report/daily-report-at-anchorage/add">
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>At Anchorage</h4>
+            <p>Logging of parameters when vessel at anchorage</p>
+          </a>
+        </nz-card>
+      </div>
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a routerLink="/main/machinery-report/daily-report-drifting/add">
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>Drifting</h4>
+            <p>Logging of parameters when vessel is drifting</p>
+          </a>
+        </nz-card>
+      </div>
+    </div>
+    <div nz-row nzGutter="10" class="feedRow001" style="margin-bottom: 20px">
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a
+            routerLink="/main/machinery-report/daily-report-manoeuvring-arrivals/add"
+          >
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>Manoeuvring Arrival</h4>
+            <p>Logging of parameters when vessel is manoeuvring</p>
+          </a>
+        </nz-card>
+      </div>
+      <div nz-col class="ant-col-grid-5">
+        <nz-card class="dashboard-card">
+          <a
+            routerLink="/main/machinery-report/daily-report-manoeuvring-departure/add"
+          >
+            <p>
+              <img alt="example" src="assets/images/New daily1.png" />
+            </p>
+            <h4>Manoeuvring Departure</h4>
+            <p>Logging of parameters when vessel is manoeuvring</p>
+          </a>
+        </nz-card>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

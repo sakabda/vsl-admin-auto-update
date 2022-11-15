@@ -1,0 +1,1237 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate
+      ? 'Update report - Bunker stock reports'
+      : 'New report - Bunker stock reports'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+    <button nz-button class="btncls">Export</button>
+    <button nz-button class="btncls">Print</button>
+    <button nz-button class="btncls">Back</button>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form [formGroup]="addUpdateBunkerstockReportForm">
+  <!-- vessel details -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Vessel details">
+        <div formGroupName="vesselDetails">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >Vessel Name *</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="vesselName"
+                    type="text"
+                    placeholder=" Enter vessel name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="imo"
+                  >IMO No *</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  [nzErrorTip]="errorImo"
+                >
+                  <input
+                    nz-input
+                    formControlName="imo"
+                    type="text"
+                    placeholder=" Enter IMO No"
+                  />
+                  <ng-template #errorImo let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter 7 digit number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Bunker stock-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Bunker stock">
+        <div formGroupName="bunkerStock">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="reportDate"
+                  >Report Date</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="reportDate"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="reportTime"
+                  >Report Time</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [ngModel]="time"
+                    [nzUse12Hours]="false"
+                    formControlName="reportTime"
+                  ></nz-time-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <nz-table
+              class="noHover"
+              nzShowPagination="false"
+              [nzData]="[1, 2, 3, 4]"
+              [nzScroll]="{ x: '1050px' }"
+            >
+              <thead>
+                <col />
+                <colgroup span="5"></colgroup>
+                <colgroup span="2"></colgroup>
+                <colgroup span="1"></colgroup>
+                <colgroup span="1"></colgroup>
+                <colgroup span="1"></colgroup>
+                <colgroup span="1"></colgroup>
+
+                <tr>
+                  <th style="text-align: center" colspan="5" scope="colgroup">
+                    <nz-form-label [nzSpan]="24">TANK</nz-form-label>
+                  </th>
+                  <th style="text-align: center" colspan="2" scope="colgroup">
+                    <nz-form-label [nzSpan]="24">Present Qty</nz-form-label>
+                  </th>
+                  <th style="text-align: center" colspan="1" scope="colgroup">
+                    <nz-form-label [nzSpan]="24">Sounding</nz-form-label>
+                  </th>
+                  <th style="text-align: center" colspan="1" scope="colgroup">
+                    <nz-form-label [nzSpan]="24">Remarks</nz-form-label>
+                  </th>
+                  <th style="text-align: center" colspan="1" scope="colgroup">
+                    <nz-form-label [nzSpan]="24">Cleaning</nz-form-label>
+                  </th>
+                  <th style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="action"
+                      >Action</nz-form-label
+                    >
+                  </th>
+                </tr>
+                <tr>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">No.</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">Side</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">Fuel</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">Grade</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">Capacity (m³)</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">m³</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">mt</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  >
+                    <nz-form-label [nzSpan]="24">cm</nz-form-label>
+                  </th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  ></th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  ></th>
+                  <th
+                    style="
+                      text-align: center;
+                      background-color: rgba(172, 225, 243, 0.3) !important;
+                    "
+                    scope="col"
+                  ></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container
+                  formArrayName="bunkerDetails"
+                  *ngFor="
+                    let item of bunkerDetailsFormArray.controls;
+                    index as i
+                  "
+                >
+                  <tr [formGroupName]="i">
+                    <td>
+                      <nz-form-control [nzMd]="24" [nzSm]="24">
+                        <nz-select
+                          nzPlaceHolder="Select"
+                          formControlName="slNo"
+                        >
+                          <nz-option nzValue="1" nzLabel="1"></nz-option>
+                          <nz-option nzValue="2" nzLabel="2"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+
+                    <td>
+                      <nz-form-control [nzMd]="24" [nzSm]="24">
+                        <nz-select
+                          nzPlaceHolder="Select"
+                          formControlName="side"
+                        >
+                          <nz-option
+                            nzValue="side1"
+                            nzLabel="side1"
+                          ></nz-option>
+                          <nz-option
+                            nzValue="side2"
+                            nzLabel="side2"
+                          ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control [nzMd]="24" [nzSm]="24">
+                        <nz-select
+                          nzPlaceHolder="Select"
+                          formControlName="fuel"
+                        >
+                          <nz-option
+                            nzValue="fuel1"
+                            nzLabel="fuel1"
+                          ></nz-option>
+                          <nz-option
+                            nzValue="fuel2"
+                            nzLabel="fuel2"
+                          ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control [nzMd]="24" [nzSm]="24">
+                        <input
+                          nz-input
+                          formControlName="grade"
+                          type="text"
+                          placeholder=" Grade"
+                        />
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzMd]="24"
+                        [nzSm]="24"
+                        [nzErrorTip]="errorcapacity"
+                      >
+                        <input
+                          nz-input
+                          formControlName="capacity"
+                          type="text"
+                          placeholder="0"
+                        />
+                        <ng-template #errorcapacity let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzMd]="24"
+                        [nzSm]="24"
+                        [nzErrorTip]="errorpresentM3"
+                      >
+                        <input
+                          nz-input
+                          formControlName="presentM3"
+                          type="text"
+                          placeholder="0"
+                        />
+                        <ng-template #errorpresentM3 let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzMd]="24"
+                        [nzSm]="24"
+                        [nzErrorTip]="errorpresentMt"
+                      >
+                        <input
+                          nz-input
+                          formControlName="presentMt"
+                          type="text"
+                          placeholder="0"
+                        />
+                        <ng-template #errorpresentMt let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzMd]="24"
+                        [nzSm]="24"
+                        [nzErrorTip]="errorsoundingCm"
+                      >
+                        <input
+                          nz-input
+                          formControlName="soundingCm"
+                          type="text"
+                          placeholder="0"
+                        />
+                        <ng-template #errorsoundingCm let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control [nzMd]="24" [nzSm]="24">
+                        <input
+                          nz-input
+                          formControlName="remarks"
+                          type="text"
+                          placeholder="Remarks"
+                        />
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control [nzMd]="19" [nzSm]="24">
+                        <nz-select
+                          nzPlaceHolder="Select"
+                          formControlName="clearing"
+                        >
+                          <nz-option nzValue="yes" nzLabel="Yes"></nz-option>
+                          <nz-option nzValue="no" nzLabel="No"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+
+                    <td>
+                      <button
+                        nz-button
+                        nzType="primary"
+                        nzDanger
+                        *ngIf="bunkerDetailsFormArray.length > 1"
+                        nz-popconfirm
+                        nzPopconfirmTitle="Are you sure?"
+                        nzPopconfirmPlacement="left"
+                        (nzOnConfirm)="removeBunkerDetails(i)"
+                      >
+                        <i nz-icon nzType="delete"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr [formGroupName]="i" class="noPaddingTop">
+                    <td colSpan="11">
+                      <div style="padding: 0 8px">
+                        <button class="unlockBtn" nz-button>Unlock</button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </nz-table>
+            <nz-divider [nzText]="AddBunkertmp"></nz-divider>
+            <ng-template #AddBunkertmp>
+              <button
+                class="addBtn"
+                nz-button
+                nzType="primary"
+                (click)="addBunkerDetails()"
+              >
+                Click here to insert new bunker stock
+              </button>
+            </ng-template>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--CLEANING-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="CLEANING">
+        <div formGroupName="clearing">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="currentFuelType"
+                  >Current Fuel Type</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="currentFuelType"
+                  >
+                    <nz-option
+                      nzValue="FO(3.5%)"
+                      nzLabel="FO(3.5%)"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="VLSFO(0.5%)"
+                      nzLabel="VLSFO(0.5%)"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="newFuelType"
+                  >New Fuel Type</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  [nzErrorTip]="errorImo"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="newFuelType"
+                  >
+                    <nz-option
+                      nzValue="FO(3.5%)"
+                      nzLabel="FO(3.5%)"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="VLSFO(0.5%)"
+                      nzLabel="VLSFO(0.5%)"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="3" [nzSm]="24" nzFor="accessToTank"
+                  >Access to TANK</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="21"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="accessToTank"
+                    type="text"
+                    placeholder=" Access to tank"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="chemicals"
+                  >Chemicals / Additives</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select nzPlaceHolder="Select" formControlName="chemicals">
+                    <nz-option nzValue="yes" nzLabel="Yes"></nz-option>
+                    <nz-option nzValue="no" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzXXl]="6" [nzMd]="7" [nzSm]="24" nzFor="brand"
+                  >Brand</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="brand"
+                    type="text"
+                    placeholder="Brand"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzXXl]="6" [nzMd]="7" [nzSm]="24" nzFor="amount"
+                  >Amount (Ltrs)</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="amount"
+                    type="text"
+                    placeholder="Amount"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzXXl]="6" [nzMd]="7" [nzSm]="24" nzFor="cost"
+                  >Cost</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="brand"
+                    type="text"
+                    placeholder="Brand"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="startDosing"
+                  >Start Dosing</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="startDosing"
+                    type="text"
+                    placeholder="Start Dosing"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="endDosing"
+                  >End Dosing</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="endDosing"
+                    type="text"
+                    placeholder="End dosing"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="startOfGasFree"
+                  >Start of Gas Free</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="startOfGasFree"
+                    type="text"
+                    placeholder="Start of Gas Free"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="endOfGasFree"
+                  >End of Gas Free</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="endOfGasFree"
+                    type="text"
+                    placeholder="End of Gas Free"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzXXl]="6" [nzMd]="7" [nzSm]="24" nzFor="manual"
+                  >Manual / Desludging</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="17"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select nzPlaceHolder="Select" formControlName="manual">
+                    <nz-option nzValue="yes" nzLabel="Yes"></nz-option>
+                    <nz-option nzValue="no" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzXXl]="6" [nzMd]="7" [nzSm]="24" nzFor="ra"
+                  >RA</nz-form-label
+                >
+
+                <nz-form-control [nzXXl]="18" [nzMd]="17" [nzSm]="24">
+                  <nz-select nzPlaceHolder="Select" formControlName="ra">
+                    <nz-option nzValue="yes" nzLabel="Yes"></nz-option>
+                    <nz-option nzValue="no" nzLabel="No"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="3" [nzSm]="24" nzFor="ra"
+                  >Comments</nz-form-label
+                >
+                <nz-form-control [nzMd]="21" [nzSm]="24">
+                  <textarea
+                    nz-input
+                    formControlName="comments"
+                    placeholder="Comments"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--BUNKERING OF COMPLIANT FUEL-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Bunker stock">
+        <div formGroupName="compliantFuel">
+          <nz-table
+            class="noHover"
+            nzShowPagination="false"
+            [nzData]="[1, 2, 3, 4]"
+            [nzScroll]="{ x: '1050px' }"
+          >
+            <thead>
+              <tr>
+                <th style="text-align: center">
+                  <nz-form-label [nzSpan]="24">Date</nz-form-label>
+                </th>
+                <th style="text-align: center">
+                  <nz-form-label [nzSpan]="24">Fuel type</nz-form-label>
+                </th>
+                <th style="text-align: center">
+                  <nz-form-label [nzSpan]="24">Port</nz-form-label>
+                </th>
+                <th style="text-align: center">
+                  <nz-form-label [nzSpan]="24">Remarks</nz-form-label>
+                </th>
+                <th style="text-align: center">
+                  <nz-form-label [nzSpan]="24">Action</nz-form-label>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                formArrayName="compliantFuelDetails"
+                *ngFor="
+                  let item of compliantFuelDetailsFormArray.controls;
+                  index as i
+                "
+              >
+                <tr [formGroupName]="i">
+                  <td>
+                    <nz-form-control [nzMd]="24" [nzSm]="24">
+                      <nz-date-picker
+                        style="width: 100%"
+                        formControlName="date"
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </td>
+                  <td>
+                    <nz-form-control [nzMd]="24" [nzSm]="24">
+                      <nz-select
+                        nzPlaceHolder="Select"
+                        formControlName="fuelType"
+                        style="width: 100%"
+                      >
+                        <nz-option nzValue="FO" nzLabel="FO(3.5%)"></nz-option>
+                        <nz-option
+                          nzValue="VLSFO"
+                          nzLabel="VLSFO (0.5%)"
+                        ></nz-option>
+                        <nz-option
+                          nzValue="ULSFO"
+                          nzLabel="ULSFO (0.1%)"
+                        ></nz-option>
+                        <nz-option nzValue="GO" nzLabel="GO (0.5%)"></nz-option>
+                        <nz-option
+                          nzValue="LSGO"
+                          nzLabel="LSGO (0.1%)"
+                        ></nz-option>
+                        <nz-option nzValue="CYL" nzLabel="CYL"></nz-option>
+                        <nz-option nzValue="LO" nzLabel="LO"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </td>
+                  <td>
+                    <nz-form-control [nzMd]="24" [nzSm]="24">
+                      <input
+                        nz-input
+                        formControlName="port"
+                        type="text"
+                        placeholder=" Port"
+                      />
+                    </nz-form-control>
+                  </td>
+                  <td>
+                    <nz-form-control [nzMd]="24" [nzSm]="24">
+                      <textarea
+                        nz-input
+                        formControlName="remarks"
+                        placeholder="Remarks"
+                      ></textarea>
+                    </nz-form-control>
+                  </td>
+                  <td>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      nzDanger
+                      *ngIf="compliantFuelDetailsFormArray.length > 1"
+                      nz-popconfirm
+                      nzPopconfirmTitle="Are you sure?"
+                      nzPopconfirmPlacement="left"
+                      (nzOnConfirm)="removeCompliantFuelDetails(i)"
+                    >
+                      <i nz-icon nzType="delete"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr [formGroupName]="i" class="noPaddingTop">
+                  <td colSpan="4">
+                    <div style="padding: 0 8px">
+                      <button class="unlockBtn" nz-button>Unlock</button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </nz-table>
+          <nz-divider [nzText]="AddComplianttmp"></nz-divider>
+          <ng-template #AddComplianttmp>
+            <button
+              class="addBtn"
+              nz-button
+              nzType="primary"
+              (click)="addCompliantFuelDetails()"
+            >
+              Click here to insert new compliant fuel
+            </button>
+          </ng-template>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+
+  <!--Totals-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Total">
+        <div formGroupName="totals">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-table nzShowPagination="false" [nzData]="[1, 2, 3, 4]">
+                <thead>
+                  <tr>
+                    <th nzWidth="170px" style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="engine"
+                        >Fuel</nz-form-label
+                      >
+                    </th>
+
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="engine"
+                        >m³</nz-form-label
+                      >
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="engine"
+                        >mt</nz-form-label
+                      >
+                    </th>
+                  </tr>
+                </thead>
+                <tbody style="background-color: #f2f1f1">
+                  <tr>
+                    <td>FO (3.5%)</td>
+
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Fo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Fo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Fo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtFo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtFo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtFo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>VLSFO (0.5%)</td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Vlsfo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Vlsfo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Vlsfo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtVlsfo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtVlsfo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtVlsfo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>ULSFO (0.1%)</td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Ulsfo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Ulsfo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Ulsfo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtUlsfo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtUlsfo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtUlsfo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>GO (0.5%)</td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Go"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Go"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Go let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtGo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtGo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtGo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>LSGO (0.1%)</td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Lsgo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Lsgo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Lsgo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtLsgo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtLsgo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtLsgo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>CYL</td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Cyl"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Cyl"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Cyl let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtCyl"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtCyl"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtCyl let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>LO</td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalm3Lo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalm3Lo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalm3Lo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errortotalmtLo"
+                      >
+                        <input
+                          nz-input
+                          formControlName="totalmtLo"
+                          placeholder="0"
+                        />
+                        <ng-template #errortotalmtLo let-control>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Back
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Print
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Export
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+  </div>
+</form>

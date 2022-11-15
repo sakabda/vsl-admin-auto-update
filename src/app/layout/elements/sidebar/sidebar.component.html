@@ -1,0 +1,115 @@
+<div class="logo" style="margin-top: 10px">
+  <img
+    src="assets/images/Picture4.png"
+    alt="logo"
+    class="sidebarLogo"
+    *ngIf="!isCollapsed; else collapselsepart"
+  />
+  <ng-template #collapselsepart>
+    <img src="assets/images/Picture4.png" alt="logo" class="miniSidebarLogo" />
+  </ng-template>
+</div>
+
+<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed" nzTheme="dark">
+  <ng-container *ngFor="let item of menuData">
+    <!-- <li
+      nz-menu-item
+      nzMatchRouter
+      [nzSelected]="item.selected"
+      *ngIf="!item.children || item.children.length === 0"
+      routerLinkActive="router-link-active"
+      [routerLink]="[item.route]"
+      (click)="sendOnMenu()"
+    >
+      
+      <img [src]="item.image" />
+      <span>{{ item.title }}</span>
+    </li>
+    <li
+      nz-submenu
+      *ngIf="item.children && item.children.length > 0"
+      [nzTitle]="item.title"
+      [nzIcon]="item.icon"
+      routerLinkActive="router-link-active"
+      [nzOpen]="item.isOpen"
+    >
+      <ul>
+        <li
+          nz-menu-item
+          nzMatchRouter
+          [routerLink]="[data.route]"
+          *ngFor="let data of item.children"
+          (click)="sendOnMenu()"
+        >
+          {{ data.title }}
+        </li>
+      </ul>
+    </li> -->
+    <li
+      nz-menu-item
+      nzMatchRouter
+      [nzSelected]="item.selected"
+      *ngIf="!item.children || item.children.length === 0"
+      routerLinkActive="router-link-active"
+      [routerLink]="[item.route]"
+      (click)="sendOnMenu()"
+    >
+      <!-- <img [src]="item.image" /> -->
+      <span>{{ item.title }}</span>
+    </li>
+    <li
+      nz-submenu
+      *ngIf="
+        item.children && item.children.length > 0 && !item.children?.children
+      "
+      [nzTitle]="item.title"
+      [nzIcon]="item.icon"
+      routerLinkActive="router-link-active"
+      [(nzOpen)]="item.isOpen"
+      (nzOpenChange)="openHandler(item.key)"
+    >
+      <ul>
+        <ng-container *ngFor="let data of item.children">
+          <li
+            nz-menu-item
+            nzMatchRouter
+            [routerLink]="[data.route]"
+            *ngIf="!data.children || data.children.length === 0"
+            (click)="sendOnMenu()"
+          >
+            <img [src]="data.image" />
+            {{ data.title }}
+          </li>
+          <!-- 3rd label -->
+          <!-- <li
+              nz-submenu
+              *ngIf="
+              data?.children && data?.children.length > 0
+              "
+              [nzTitle]="data.title"
+              [nzIcon]="data.icon"
+              routerLinkActive="router-link-active"
+              [(nzOpen)]="data.isOpen"
+            >
+              <ul>
+                <li
+                  nz-menu-item
+                  nzMatchRouter
+                  [routerLink]="[subData.route]"
+                  *ngFor="let subData of data?.children"
+                  (click)="sendOnMenu()"
+                >
+                  <img [src]="data.image" />
+                  {{ subData.title }}
+                </li>
+              </ul>
+            </li> -->
+        </ng-container>
+      </ul>
+    </li>
+  </ng-container>
+</ul>
+
+<div class="version-block">
+  <p>Version 1.0.3</p>
+</div>

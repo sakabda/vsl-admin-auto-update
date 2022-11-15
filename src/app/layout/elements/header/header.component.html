@@ -1,0 +1,53 @@
+<nz-header>
+  <div nz-row [nzGutter]="16" class="header-section">
+    <div nz-col class="gutter-row" [nzMd]="12">
+      <i
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'caret-right' : 'caret-left'"
+        (click)="onChangeCollapse()"
+      ></i>
+      <ng-container *ngIf="shipDetails?.Unique_Group === 'SUPPLY'">
+        <span style="color: #818181; font-size: 18px; padding-left: 21px"
+          >Offshore Vessel Reporting v1.0.3</span
+        >
+      </ng-container>
+      <ng-container *ngIf="shipDetails?.Unique_Group != 'SUPPLY'">
+        <span style="color: #818181; font-size: 18px; padding-left: 21px"
+          >Vessel Reporting Suite v1.0.3</span
+        >
+      </ng-container>
+    </div>
+    <div nz-col class="gutter-row rightPart header-section" [nzMd]="12">
+      <span
+        style="
+          color: #818181;
+          font-size: 18px;
+          line-height: normal;
+          text-align: right;
+        "
+        >{{ shipDetails?.Ship_Name }} | IMO: {{ shipDetails?.IMO_No }}
+        <small style="display: block; line-height: 1; text-align: right"
+          >Logged in as: {{ shipDetails?.ID_Name }}
+        </small>
+      </span>
+      <button
+        nz-button
+        nzType="link"
+        (click)="logout()"
+        class="logout"
+        nz-tooltip
+        nzTooltipTitle="Logout"
+        nzTooltipPlacement="bottomRight"
+      >
+        <!-- <i style="color: #7d7d7d" nz-icon nzType="logout"></i> -->
+        <img src="assets/images/logout.png" />
+      </button>
+      <span></span>
+
+      <div>
+        <nz-dropdown-menu #menu="nzDropdownMenu"> </nz-dropdown-menu>
+      </div>
+    </div>
+  </div>
+</nz-header>

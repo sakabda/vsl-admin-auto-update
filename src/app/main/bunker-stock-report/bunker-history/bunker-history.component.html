@@ -1,0 +1,318 @@
+<!-- <div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Bunker Stock </nz-page-header-title>
+    <nz-page-header-extra>
+      <a routerLink="/main/bunker-stock-report/dashboard"
+        ><button nz-button class="btncls">Back</button></a
+      >
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div nz-row nzJustify="end"></div>
+<div nz-row nzGutter="20" class="feedRow" style="margin-bottom: 20px">
+  <div
+    nz-col
+    class="ant-col-grid-5"
+    *ngFor="let data of allReports; index as i"
+  >
+    <nz-card
+      class="card-box-sm"
+      style="min-width: 240px; min-height: 163px; margin-bottom: 20px"
+    >
+      <div nz-col nzSpan="24" class="chart-title">
+        <div nz-row nzGutter="10">
+          <div nz-col>
+            <h4 style="color: var(--color-card-title)">{{ data.Fuel_Type }}</h4>
+          </div>
+
+          <span
+            [ngClass]="{
+              hsfoShipBadge: data.Fuel_Type == 'HSFO [3.5%]',
+              lsfoShipBadge: data.Fuel_Type == 'LSFO [1.0%]',
+              mdoShipBadge: data.Fuel_Type == 'MDO [0.5%]',
+              lsgoShipBadge: data.Fuel_Type == 'LSGO [0.1%]',
+              mgoShipBadge: data.Fuel_Type == 'MGO [0.5%]',
+              ulsfoShipBadge: data.Fuel_Type == 'ULSFO [0.1%]',
+              vlsfoShipBadge: data.Fuel_Type == 'VLSFO [0.5%]'
+            }"
+            class="card_badge"
+            >{{ data.Start_Date_Of_Fuel_Bunkered | date: "dd-MMM-yy" }}
+          </span>
+        </div>
+      </div>
+
+      <div
+        nz-row
+        style="padding-left: 12px; padding-right: 12px; margin-top: 12px"
+      >
+        <div nz-col nzSpan="17">
+          <p class="rh">Qty. Bunkered [MT]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Quantity_Of_Fuel_Bunkered }}</p>
+          <nz-divider></nz-divider>
+        </div>
+
+        <div nz-col nzSpan="17">
+          <p class="rh">Fuel Grade</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Fuel_Grade }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Viscosity @50°C [CST]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Viscosity_At_50_Degree_Celcius }}</p>
+
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Density @15°C [kg/m<sup>3</sup>]</p>
+
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Density_At_15_Degree_Celcius }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Sulphur [%]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Sulphur_Percentage_In_Bunkered_Fuel }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Water Content [%]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Water_Percentage_In_Bunkered_Fuel }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="18">
+          <p class="rh">CAT Fines [AL+Si]</p>
+          <nz-divider></nz-divider>
+        </div>
+
+        <div nz-col nzSpan="6">
+          <p class="rh">
+            {{ data.CAT_Fines_AL_Si_Percentage_In_Bunkered_Fuel }}
+          </p>
+          <nz-divider></nz-divider>
+        </div>
+
+        <div nz-col nzSpan="7"><p class="rh">Location:</p></div>
+
+        <div nz-col nzSpan="16">
+          <p class="rh">{{ data.Location_Of_Fuel_Bunkered }}</p>
+        </div>
+      </div>
+      <div
+        nz-row
+        style="padding-left: 12px; padding-right: 12px; margin-top: 12px"
+      >
+        <button
+          *ngIf="isAdmin"
+          nz-button
+          nzType="primary"
+          routerLinkActive="router-link-active"
+          class="card-delete"
+          nz-popconfirm
+          nzPopconfirmTitle="Confirm remove this Fuel ?"
+          (nzOnConfirm)="confirm(data._id)"
+          (nzOnCancel)="cancel()"
+          nzPopconfirmPlacement="top"
+        >
+          Delete when ROB = 0
+        </button>
+        <button
+          *ngIf="isUser"
+          nz-button
+          nzType="primary"
+          routerLinkActive="router-link-active"
+          class="card-delete"
+          nz-popconfirm
+          nzPopconfirmTitle="Confirm remove this Fuel ?"
+          (nzOnConfirm)="confirm(data._id)"
+          (nzOnCancel)="cancel()"
+          nzPopconfirmPlacement="top"
+          disabled
+        >
+          Delete when ROB = 0
+        </button>
+      </div>
+    </nz-card>
+  </div>
+</div> -->
+<div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Bunker Stock </nz-page-header-title>
+    <nz-page-header-extra>
+      <a routerLink="/main/bunker-stock-report/dashboard"
+        ><button nz-button class="btncls">Back</button></a
+      >
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div nz-row nzJustify="end"></div>
+<div nz-row nzGutter="20" class="feedRow" style="margin-bottom: 20px">
+  <div
+    nz-col
+    class="ant-col-grid-5"
+    *ngFor="let data of allReports; index as i"
+  >
+    <nz-card
+      class="card-box-sm"
+      style="min-width: 240px; min-height: 163px; margin-bottom: 20px"
+    >
+      <div nz-col nzSpan="24" class="chart-title">
+        <div nz-row nzGutter="10">
+          <div nz-col>
+            <h4 style="color: var(--color-card-title)">{{ data.Fuel_Type }}</h4>
+          </div>
+
+          <span
+            [ngClass]="{
+              hsfoShipBadge: data.Fuel_Type == 'HSFO [3.5%]',
+              lsfoShipBadge: data.Fuel_Type == 'LSFO [1.0%]',
+              mdoShipBadge: data.Fuel_Type == 'MDO [0.5%]',
+              lsgoShipBadge: data.Fuel_Type == 'LSGO [0.1%]',
+              mgoShipBadge: data.Fuel_Type == 'MGO [0.5%]',
+              ulsfoShipBadge: data.Fuel_Type == 'ULSFO [0.1%]',
+              vlsfoShipBadge: data.Fuel_Type == 'VLSFO [0.5%]'
+            }"
+            class="card_badge"
+            >{{ data.Start_Date_Of_Fuel_Bunkered | date: "dd-MMM-yy" }}
+          </span>
+        </div>
+      </div>
+
+      <div
+        nz-row
+        style="padding-left: 12px; padding-right: 12px; margin-top: 12px"
+      >
+        <div nz-col nzSpan="17">
+          <p class="rh">Qty. Bunkered [MT]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Quantity_Of_Fuel_Bunkered }}</p>
+          <nz-divider></nz-divider>
+        </div>
+
+        <div nz-col nzSpan="17">
+          <p class="rh">Fuel Grade</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Fuel_Grade }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Viscosity @50°C [CST]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Viscosity_At_50_Degree_Celcius }}</p>
+
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Density @15°C [kg/m<sup>3</sup>]</p>
+
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Density_At_15_Degree_Celcius }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Sulphur [%]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Sulphur_Percentage_In_Bunkered_Fuel }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="17">
+          <p class="rh">Water Content [%]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="6">
+          <p class="rh">{{ data.Water_Percentage_In_Bunkered_Fuel }}</p>
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-col nzSpan="18">
+          <p class="rh">CAT Fines [AL+Si]</p>
+          <nz-divider></nz-divider>
+        </div>
+        <!-- <div nz-col nzSpan="1"></div> -->
+        <div nz-col nzSpan="6">
+          <p class="rh">
+            {{ data.CAT_Fines_AL_Si_Percentage_In_Bunkered_Fuel }}
+          </p>
+          <nz-divider></nz-divider>
+        </div>
+
+        <div nz-col nzSpan="7"><p class="rh">Location:</p></div>
+        <!-- <div nz-col nzSpan="1"></div> -->
+        <div nz-col nzSpan="16">
+          <p class="rh">{{ data.Location_Of_Fuel_Bunkered }}</p>
+        </div>
+      </div>
+      <div
+        nz-row
+        style="padding-left: 12px; padding-right: 12px; margin-top: 12px"
+      >
+        <button
+          *ngIf="isAdmin"
+          nz-button
+          nzType="primary"
+          routerLinkActive="router-link-active"
+          class="card-delete"
+          nz-popconfirm
+          nzPopconfirmTitle="Confirm remove this Fuel ?"
+          (nzOnConfirm)="confirm(data._id)"
+          (nzOnCancel)="cancel()"
+          nzPopconfirmPlacement="top"
+        >
+          Delete when ROB = 0
+        </button>
+        <button
+          *ngIf="isUser"
+          nz-button
+          nzType="primary"
+          routerLinkActive="router-link-active"
+          class="card-delete"
+          nz-popconfirm
+          nzPopconfirmTitle="Confirm remove this Fuel ?"
+          (nzOnConfirm)="confirm(data._id)"
+          (nzOnCancel)="cancel()"
+          nzPopconfirmPlacement="top"
+          disabled
+        >
+          Delete when ROB = 0
+        </button>
+      </div>
+    </nz-card>
+  </div>
+</div>

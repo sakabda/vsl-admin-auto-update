@@ -1,0 +1,434 @@
+<nz-page-header class="site-page-header" [nzTitle]="title">
+  <nz-page-header-extra>
+    <button nz-button nzType="primary" class="btncls">Save</button>
+    <!-- <button nz-button class="btncls">Sync</button> -->
+    <a routerLink="/main/machinery-report/monthly-report">
+      <button nz-button class="btncls">Back</button></a
+    >
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form>
+  <div nz-row [nzGutter]="16">
+    <!-- scavenger report -->
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Inspection Details">
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                >Main Engine [Rhrs]
+              </nz-form-label>
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input nz-input type="text" placeholder="Main Engine [Rhrs]" />
+              </nz-form-control>
+              <nz-form-control [nzMd]="2"></nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                >Date & Time
+              </nz-form-label>
+
+              <nz-form-control
+                [nzMd]="6"
+                [nzSm]="24"
+                nzErrorTip="Must input proper value"
+              >
+                <nz-date-picker
+                  style="width: 100%"
+                  nzFormat="dd/MM/YYYY"
+                ></nz-date-picker>
+              </nz-form-control>
+              <nz-form-control
+                [nzMd]="3"
+                [nzSm]="24"
+                nzErrorTip="Must input proper value"
+              >
+              </nz-form-control>
+              <nz-form-control
+                [nzMd]="6"
+                [nzSm]="24"
+                nzErrorTip="Must input proper value"
+              >
+                <nz-time-picker
+                  style="width: 100%"
+                  [nzUse12Hours]="false"
+                  nzFormat="HH:mm"
+                >
+                </nz-time-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- 2 row -->
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24">Fresh CLO BN</nz-form-label>
+              <nz-form-control [nzMd]="14" [nzSm]="24">
+                <input nz-input type="text" placeholder="Fresh CLO BN" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24">Port</nz-form-label>
+              <nz-form-control [nzMd]="15" [nzSm]="24">
+                <input nz-input type="text" placeholder="Port" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- 3rd row -->
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                >Inspection Reason
+              </nz-form-label>
+              <nz-form-control
+                [nzMd]="14"
+                [nzSm]="24"
+                nzErrorTip="Must input proper value"
+              >
+                <nz-select style="width: 100%" nzPlaceHolder="Select">
+                  <nz-option></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                >Fuel in use</nz-form-label
+              >
+              <nz-form-control
+                [nzMd]="15"
+                [nzSm]="24"
+                nzErrorTip="Must input proper value"
+              >
+                <nz-select style="width: 100%" nzPlaceHolder="Select">
+                  <nz-option></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- 4th row  -->
+          <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="2" [nzSm]="24" nzFor="vesselName">
+                Comments
+              </nz-form-label>
+              <nz-form-label [nzMd]="2" [nzSm]="24"></nz-form-label>
+              <nz-form-control [nzMd]="19" [nzSm]="24">
+                <input nz-input />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <nz-divider></nz-divider>
+    <!-- componenet INFO  -->
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Component Info">
+        <nz-tabset>
+          <nz-tab nzTitle="Unit 1">
+            <div nz-row [nzGutter]="16">
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                    >Piston Ring Pack [Rhrs]
+                  </nz-form-label>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Ring Pack [Rhrs]"
+                    />
+                  </nz-form-control>
+                  <nz-form-control [nzMd]="2"></nz-form-control>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- 2nd col -->
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                    >Piston Ring Manuf.</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzMd]="15"
+                    [nzSm]="24"
+                    nzErrorTip="Must input proper value"
+                  >
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Ring Manuf."
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <!-- 2nd row -->
+            <div nz-row [nzGutter]="16">
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                    >Piston Crown [Rhrs]
+                  </nz-form-label>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Crown [Rhrs]"
+                    />
+                  </nz-form-control>
+                  <nz-form-control [nzMd]="2"></nz-form-control>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- 2nd col -->
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                    >Piston Ring Type</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzMd]="15"
+                    [nzSm]="24"
+                    nzErrorTip="Must input proper value"
+                  >
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Ring Type"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <!-- 3rd row -->
+            <div nz-row [nzGutter]="16">
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                    >Piston Skirt [Rhrs]
+                  </nz-form-label>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Skirt [Rhrs]"
+                    />
+                  </nz-form-control>
+                  <nz-form-control [nzMd]="2"></nz-form-control>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- 2nd col -->
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                    >Piston Ring Material</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzMd]="15"
+                    [nzSm]="24"
+                    nzErrorTip="Must input proper value"
+                  >
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Ring Material"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <!-- 4th row -->
+            <div nz-row [nzGutter]="16">
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                    >Liner [Rhrs]
+                  </nz-form-label>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input nz-input type="text" placeholder="Liner [Rhrs]" />
+                  </nz-form-control>
+                  <nz-form-control [nzMd]="2"></nz-form-control>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- 2nd col -->
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                    >Base Feed Rate [g/kwh]</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzMd]="15"
+                    [nzSm]="24"
+                    nzErrorTip="Must input proper value"
+                  >
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Ring Manuf."
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <!-- 5th row -->
+            <div nz-row [nzGutter]="16">
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                    >Fuel Inj. [Rhrs]
+                  </nz-form-label>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Fuel Inj. [Rhrs]"
+                    />
+                  </nz-form-control>
+                  <nz-form-control [nzMd]="2"></nz-form-control>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- 2nd col -->
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                    >Scrapedown BN/Iron
+                  </nz-form-label>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Scrapedown BN/Iron "
+                    />
+                  </nz-form-control>
+                  <nz-form-control [nzMd]="3"></nz-form-control>
+                  <nz-form-control [nzMd]="6" [nzSm]="24">
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Scrapedown BN/Iron "
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="Unit 2">Content of Tab Pane 2</nz-tab>
+          <nz-tab nzTitle="Unit 3">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 4">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 5">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 6">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 7">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 8">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 9">Content of Tab Pane 3</nz-tab>
+        </nz-tabset>
+      </nz-card>
+    </div>
+
+    <!-- Inspection INfo -->
+    <nz-divider></nz-divider>
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Inspection Info">
+        <nz-tabset>
+          <nz-tab nzTitle="Unit 1">
+            <div nz-row [nzGutter]="16">
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24"
+                    >Upload Image</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-upload
+                      class="avatar-uploader"
+                      nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      nzName="avatar"
+                      nzListType="picture-card"
+                      [nzShowUploadList]="false"
+                      [nzBeforeUpload]="beforeUpload"
+                      (nzChange)="handleChange($event)"
+                    >
+                      <ng-container *ngIf="!avatarUrl">
+                        <i
+                          class="upload-icon"
+                          nz-icon
+                          [nzType]="loading ? 'loading' : 'plus'"
+                        ></i>
+                        <div class="ant-upload-text">Upload</div>
+                      </ng-container>
+                      <img
+                        *ngIf="avatarUrl"
+                        [src]="avatarUrl"
+                        style="width: 100%"
+                      />
+                    </nz-upload>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- 2nd col -->
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                    >Piston Ring Manuf.</nz-form-label
+                  >
+                  <nz-form-control
+                    [nzMd]="15"
+                    [nzSm]="24"
+                    nzErrorTip="Must input proper value"
+                  >
+                    <input
+                      nz-input
+                      type="text"
+                      placeholder="Piston Ring Manuf."
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="Unit 2">Content of Tab Pane 2</nz-tab>
+          <nz-tab nzTitle="Unit 3">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 4">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 5">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 6">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 7">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 8">Content of Tab Pane 3</nz-tab>
+          <nz-tab nzTitle="Unit 9">Content of Tab Pane 3</nz-tab>
+        </nz-tabset>
+      </nz-card>
+    </div>
+  </div>
+</form>

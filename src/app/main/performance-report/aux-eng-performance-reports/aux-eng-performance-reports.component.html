@@ -1,0 +1,133 @@
+<!-- <div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Aux. Engine Performance Report </nz-page-header-title>
+    <nz-page-header-extra>
+      <button
+        nz-button
+        nzType="primary"
+        [routerLink]="['add']"
+        routerLinkActive="router-link-active"
+        class="btncls"
+      >
+        Add new report
+      </button>
+      <a routerLink="/main/performance-report/dashboard">
+        <button nz-button class="btncls">Back</button></a> </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div nz-row nzJustify="end"></div>
+<nz-card>
+  <nz-table
+    #reportTbl
+    [nzData]="allReports"
+    [nzLoading]="loading"
+    [nzTotal]="totalDataCount"
+    [(nzPageSize)]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="true"
+    nzShowSizeChanger
+  >
+    <thead>
+      <tr>
+        <th>DATE</th>
+        <th>EQUIPMENT</th>
+        <th>MANUFACTURER & TYPE</th>
+        <th>RUNNING HOURS</th>
+
+        <th>Action</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of reportTbl.data; index as i">
+        <td>{{ data.date }}</td>
+        <td>{{ data.eqipment }}</td>
+        <td>{{ data.manufacturer }}</td>
+        <td>{{ data.runningHrs }}</td>
+
+        <td class="action-buttons">
+          <a
+            style="margin-right: 7px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            >
+            <img style="height: 20px" src="assets/images/Icon_Edit.svg"/>
+          </a>
+          <a
+            style="margin-right: 7px"
+            nzTooltipTitle="Download"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            ><img
+              style="height: 20px"
+              src="assets/images/Icon_PDF Download.svg"
+          /></a>
+          <a
+            style="margin-right: 7px"
+            nzTooltipTitle="Download"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            >
+            <img
+              style="height: 20px"
+              src="assets/images/Icon_Mail attachment.svg"
+          />
+        </a>
+          <a
+            style="margin-right: 7px"
+            nzTooltipTitle="Download"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            >
+            <img style="height: 20px" src="assets/images/Icon_Sync.svg"
+          />
+        </a>
+          <a
+          style="margin-right: 7px"
+          nzTooltipTitle="Mail"
+          nzTooltipPlacement="topCenter"
+          nz-tooltip
+          routerLinkActive="router-link-active"
+          ><img style="height: 20px" src="assets/images/Icon_Mail attachment.svg"
+        /></a>
+        <a
+
+        nzTooltipTitle="Sync"
+        nzTooltipPlacement="topCenter"
+        nz-tooltip
+        routerLinkActive="router-link-active"
+        ><img style="height: 20px" src="assets/images/Icon_Sync.svg"
+      /></a>
+        </td>
+        <td><span class="inactive status"></span></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card> -->
+
+<div nz-row>
+  <div nz-col nzSpan="18" style="padding: 0 0 24px; height: 64px">
+    <nz-page-header-title style="margin-left: 2px; font-weight: 400"
+      >Aux. Engine Performance Report
+    </nz-page-header-title>
+  </div>
+  <div nz-col nzSpan="6" style="text-align: right">
+    <a routerLink="/main/performance-report/dashboard"
+      ><button nz-button class="btncls">Back</button>
+    </a>
+  </div>
+</div>
+
+<div nz-row nzGutter="20">
+  <div nz-col nzSpan="24">
+    <nz-card class="under-dev-card">
+      <div class="under-devlopment-img">
+        <img src="assets/images/Under development.png" /></div
+    ></nz-card>
+  </div>
+</div>

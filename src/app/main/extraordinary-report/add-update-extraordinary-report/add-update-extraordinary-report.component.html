@@ -1,0 +1,115 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate
+      ? 'Update report - Extraordinary reports'
+      : 'New report - Extraordinary reports'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+    <button nz-button class="btncls">Export</button>
+    <button nz-button class="btncls">Print</button>
+    <button nz-button class="btncls">Back</button>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form [formGroup]="addUpdateExtraOrdinaryReportForm">
+  <!-- report details -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <span style="color: #ff9966"
+        >Please note that by creating an extraordinary report you overlapping
+        the routine procedure of creating noon reports.</span
+      >
+      <nz-card nzTitle="Report details">
+        <div formGroupName="reportDetails">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="reportType"
+                  >Report Type *</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="reportType"
+                  >
+                    <nz-option
+                      nzValue="Noon in Port"
+                      nzLabel="Noon in Port "
+                    ></nz-option>
+                    <nz-option
+                      nzValue="Noon at Sea"
+                      nzLabel="Noon at Sea"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="Arrival in Point"
+                      nzLabel="Arrival in Point "
+                    ></nz-option>
+                    <nz-option
+                      nzValue="Departure"
+                      nzLabel="Departure"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="reportDate"
+                  >Report Date *</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="reportDate"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Back
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Print
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Export
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+  </div>
+</form>

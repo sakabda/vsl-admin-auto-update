@@ -1,0 +1,61 @@
+.trigger {
+  // font-size: 28px;
+  // line-height: 64px;
+  // padding: 0 24px;
+  font-size: 14px;
+  line-height: 39px;
+
+  cursor: pointer;
+  transition: color 0.3s;
+  //color: #818181 !important;
+  color: #f1f1f1 !important;
+  background-color: #2bb673;
+
+  padding-top: 5px;
+  padding-right: 2px;
+  margin: 10px 0px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.trigger:hover {
+  color: #062672;
+}
+.relativeposition {
+  position: relative;
+  display: inline-block;
+}
+
+.rightPart {
+  padding-right: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  div {
+    // margin: 0 8px;
+    margin: 0 0px;
+  }
+  i {
+    color: #fff;
+  }
+  nz-avatar {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+}
+
+.ant-layout-header {
+  padding: 0 0px 0 0;
+}
+
+nz-header {
+  box-shadow: 1px 1px 15px 2px;
+  background: #f1f1f1;
+}
+.ant-dropdown-menu-item {
+  padding: 15px 24px;
+}
+.header-section {
+  margin-right: 0px !important;
+}

@@ -1,0 +1,32 @@
+<nz-page-header class="site-page-header" nzTitle="Performance Reporting">
+  <nz-page-header-extra>
+    <a routerLink="/main/dashboard"
+      ><button nz-button class="btncls">Back</button></a
+    >
+  </nz-page-header-extra>
+</nz-page-header>
+
+<div nz-row nzGutter="10" class="feedRow001" style="margin-bottom: 20px">
+  <div nz-col class="ant-col-grid-5">
+    <nz-card class="dashboard-card" style="padding-left: 15px">
+      <a routerLink="/main/performance-report/main-engine-performance-reports">
+        <p>
+          <img alt="example" src="assets/images/Card_Main engine.svg" />
+        </p>
+        <h4>Main Eng. Performance</h4>
+        <p>Main Engine performance test for evaluation of running condition</p>
+      </a>
+    </nz-card>
+  </div>
+  <div nz-col class="ant-col-grid-5">
+    <nz-card class="dashboard-card" style="padding-left: 15px">
+      <a routerLink="/main/performance-report/aux-engine-performance-reports">
+        <p>
+          <img alt="example" src="assets/images/Card_Aux engine.svg" />
+        </p>
+        <h4>Aux. Eng. Performance</h4>
+        <p>Aux. Engine performance test for evaluation of running condition</p>
+      </a>
+    </nz-card>
+  </div>
+</div>

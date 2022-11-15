@@ -1,0 +1,14 @@
+<router-outlet></router-outlet>
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="New version available"
+  [nzFooter]="null"
+  [nzClosable]="false"
+>
+  <ng-container *nzModalContent>
+    <p>New version available to download</p>
+    <a href="{{ downloadUrl }}"
+      ><button nz-button nzType="primary">Download</button></a
+    >
+  </ng-container>
+</nz-modal>

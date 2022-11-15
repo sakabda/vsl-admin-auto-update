@@ -1,0 +1,267 @@
+// .outerContainer {
+//   height: 100vh;
+//   background-color: #0d1d41;
+// }
+// .loginCard {
+//   padding: 0px;
+//   width: 390px;
+//   height: 570px;
+//   background-color: #091734;
+//   border-color: #091734;
+//   border-radius: 5px;
+//   // box-shadow: 0 0 10px 0 #cfc6c682;
+//   .loginHeader {
+//     text-align: center;
+//     margin-bottom: 30px;
+//   }
+//   .login-button {
+//     margin: 30px 0;
+//     text-align: center;
+//     .login-form-button {
+//       width: 100%;
+//       border-radius: 5px;
+//       padding: 7px 15px;
+//       font-weight: 600;
+//       height: auto;
+//       background-color: #2bb673;
+//       border-color: #2bb673;
+//       font-weight: 400;
+//       border-color: none !important;
+//       box-shadow: none;
+//     }
+//     .login-form-button:hover {
+//       background-color: rgba(29, 125, 79, 1);
+//     }
+//   }
+//   .ant-form-item {
+//     margin-bottom: 15px;
+//   }
+//   .ant-input-affix-wrapper {
+//     width: 100%;
+//     border-radius: 5px;
+//     background-color: var(--color-input);
+//     padding: 7px 15px;
+//   }
+//   .ant-input {
+//     background-color: transparent;
+//   }
+// }
+// .logo-area {
+//   width: 300px;
+//   height: 150px;
+//   margin: 40px 13px 40px 13px;
+//   img {
+//     width: 100%;
+//     height: 100%;
+//   }
+//   h5 {
+//     color: var(--color-base);
+//     font-size: 26px;
+//     font-weight: 500;
+//     margin-bottom: 10px;
+//   }
+// }
+
+// .login-form-forgot {
+//   text-align: right;
+// }
+
+// .orlogwith {
+//   text-align: center;
+//   margin-top: 15px;
+//   position: relative;
+//   span {
+//     background-color: #fff;
+//     padding: 5px 20px;
+//     font-weight: 700;
+//     z-index: 9;
+//     position: relative;
+//   }
+// }
+
+// .logbxaligned {
+//   height: 100%;
+//   align-items: center;
+// }
+// .logbxaligned > div {
+//   height: 100%;
+// }
+
+// .logareabox {
+//   //background-color: #f8f9fe;
+//   padding: 30px;
+//   height: 100%;
+//   display: flex;
+//   align-items: center;
+//   flex-wrap: wrap;
+//   h4 {
+//     color: var(--color-theme);
+//     font-size: 30px;
+//     font-weight: 600;
+//     margin-bottom: 20px;
+//   }
+// }
+
+// .logbgonly {
+//   background-image: url(/assets/images/logbg.jpg);
+//   background-size: cover;
+//   background-position: center center;
+//   display: block;
+//   height: 100%;
+// }
+
+// nz-input-group input {
+//   color: #fff;
+//   border-color: #d9d9d9;
+// }
+
+// nz-input-group input:focus {
+//   border-color: #ffffff;
+// }
+
+// .ant-input-affix-wrapper:hover {
+//   border-color: #fff;
+// }
+
+// // placeholder
+
+// ::placeholder {
+//   color: #706a6a;
+// }
+
+// // icon color change
+
+// [nzPrefixIcon] {
+//   color: #eeebeb;
+// }
+
+.outerContainer {
+  height: 100vh;
+  width: 100vw;
+  background-color: #0d1d41;
+}
+.loginCard {
+  // width: 390px;
+  height: 500px;
+  background-color: #091734;
+  border-color: #091734;
+  border-radius: 5px;
+
+  .loginHeader {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .login-button {
+    margin: 30px 0;
+    text-align: center;
+    .login-form-button {
+      width: 100%;
+      border-radius: 5px;
+      padding: 7px 15px;
+      font-weight: 600;
+      height: auto;
+      background-color: #2bb673;
+      border-color: #2bb673;
+      font-weight: 400;
+      border-color: none !important;
+      box-shadow: none;
+    }
+    .login-form-button:hover {
+      background-color: rgba(29, 125, 79, 1);
+    }
+  }
+  .ant-form-item {
+    margin-bottom: 15px;
+  }
+  .ant-input-affix-wrapper {
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--color-input);
+    padding: 7px 15px;
+  }
+  .ant-input {
+    background-color: transparent;
+  }
+}
+.logo-area {
+  width: 300px;
+  height: 150px;
+  margin: 40px 15px 40px 15px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  h5 {
+    color: var(--color-base);
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+}
+.login-form-forgot {
+  text-align: right;
+}
+.orlogwith {
+  text-align: center;
+  margin-top: 15px;
+  position: relative;
+  span {
+    background-color: #fff;
+    padding: 5px 20px;
+    font-weight: 700;
+    z-index: 9;
+    position: relative;
+  }
+}
+.logbxaligned {
+  height: 100%;
+  align-items: center;
+}
+.logbxaligned > div {
+  height: 100%;
+}
+.logareabox {
+  //background-color: #f8f9fe;
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  h4 {
+    color: var(--color-theme);
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+}
+.logbgonly {
+  background-image: url(/assets/images/logbg.jpg);
+  background-size: cover;
+  background-position: center center;
+  display: block;
+  height: 100%;
+}
+nz-input-group {
+  border-color: #696969;
+}
+nz-input-group input {
+  color: #fff;
+  border-color: #706a6a !important;
+  padding-left: 5px;
+  padding-top: 2px;
+}
+nz-input-group input:focus {
+  border-color: #2bb673 !important;
+}
+.ant-input-affix-wrapper:hover {
+  border-color: #2bb673;
+}
+// placeholder
+::placeholder {
+  color: #bebebe;
+}
+// icon color change
+[nzPrefixIcon] {
+  color: #bebebe;
+}

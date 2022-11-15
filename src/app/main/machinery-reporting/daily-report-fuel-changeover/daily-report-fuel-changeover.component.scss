@@ -1,0 +1,116 @@
+::ng-deep {
+  .ant-table table {
+    background-color: #f2f1f1 !important;
+  }
+  th {
+    margin: 0px -1px 1px 0px;
+    padding: 10px 0 10px 10px !important;
+    background: #e2e2e2 !important;
+    height: 35px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none !important;
+    text-align: left;
+    text-transform: uppercase;
+    border-radius: 0px;
+  }
+  td {
+    padding: 10px 0 10px 10px !important;
+  }
+  .ant-table-thead > tr > th {
+    box-shadow: none !important;
+  }
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td,
+  .ant-table tfoot > tr > th,
+  .ant-table tfoot > tr > td {
+    border-bottom: 1px solid #d9d9d9;
+  }
+
+  nz-table,
+  nz-table-title-footer,
+  nz-table-inner-scroll,
+  nz-table-inner-default,
+  nz-table-selection {
+    background: #f1f1f1;
+  }
+  .ant-table-tbody > tr > td {
+    padding: 5px 0;
+  }
+}
+
+.ant-card {
+  border-radius: 5px;
+  background: #f1f1f1;
+}
+
+::ng-deep {
+  .ant-popover-inner-content {
+    background: #f2f1f1;
+  }
+  // .ant-popover-placement-top {
+  //   @media only screen and (min-width: 1080px) {
+  //     padding-bottom: 200px;
+  //   }
+  //   @media only screen and (min-width: 1200px) {
+  //     padding-bottom: 195px;
+  //   }
+  //   @media only screen and (min-width: 1500px) {
+  //     padding-bottom: 163px;
+  //   }
+  //   @media only screen and (min-width: 1688px) {
+  //     padding-bottom: 162px;
+  //   }
+  // }
+  .ant-popover-buttons {
+    button:nth-child(1) {
+      background-color: #7f7f7f !important;
+      color: #fff;
+      border-color: transparent !important;
+      padding: 0px 10px;
+    }
+    button:nth-child(1):hover {
+      background-color: #7f7f7f;
+    }
+    button:nth-child(2) {
+      visibility: hidden;
+      background-color: #7f7f7f;
+      color: #fff;
+      border-color: transparent !important;
+    }
+
+    button:nth-child(2):hover {
+      background-color: #7f7f7f;
+    }
+    button:nth-child(2):after {
+      visibility: visible;
+      content: "Delete";
+      background-color: #7f7f7f;
+      color: #fff;
+      border-color: transparent !important;
+      height: 24px;
+      padding: 4px 10px;
+      font-size: 14px;
+      border-radius: 2px;
+    }
+  }
+  .ant-popover-message-title {
+    //padding-left: 22px !important;
+    color: #606060 !important;
+    font-weight: 450 !important;
+  }
+
+  // .anticon svg {
+  //   display: none;
+  // }
+  .ant-popover-inner {
+    border-radius: 5px !important;
+    overflow: hidden !important;
+  }
+  // .dailyReport {
+  //   .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  //     border: none;
+  //     border-radius: 5px;
+  //   }
+  // }
+}

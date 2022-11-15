@@ -1,0 +1,1851 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate ? 'Update report - Noon reports' : 'New report - Noon reports'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+    <button nz-button class="btncls">Export</button>
+    <button nz-button class="btncls">Print</button>
+    <button nz-button class="btncls">Back</button>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form [formGroup]="addUpdateNoonReportForm">
+  <!-- veesel & report details -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Vessel & Report Details">
+        <div formGroupName="vesselDetails">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="3" [nzSm]="24" nzFor="reportType"
+                  >Report type *</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="21"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="reportType"
+                    type="text"
+                    [(ngModel)]="reportValue"
+                    readonly
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >Vessel Name *</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="vesselName"
+                    type="text"
+                    placeholder=" Enter vessel name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="imo"
+                  >IMO No *
+                </nz-form-label>
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  [nzErrorTip]="errorImo"
+                >
+                  <input
+                    nz-input
+                    formControlName="imo"
+                    type="text"
+                    placeholder=" Enter IMO No"
+                  />
+                  <ng-template #errorImo let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter 7 digit number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!-- Crew Onboard -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Crew Onboard">
+        <div formGroupName="crewOnboard">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="masterName"
+                  >Master Name
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="masterName"
+                    type="text"
+                    placeholder=" Enter Master name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="coName"
+                  >C/O Name
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="coName"
+                    type="text"
+                    placeholder=" Enter C/O name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="ceName"
+                  >C/E Name
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="ceName"
+                    type="text"
+                    placeholder=" Enter C/E name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="aeName"
+                  >A/E Name
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="aeName"
+                    type="text"
+                    placeholder=" Enter A/E name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!-- Voyage Details -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Voyage Details">
+        <div formGroupName="voyageDetails">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="voyageName"
+                  >Voyage Name
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="voyageName"
+                    type="text"
+                    placeholder=" Enter voyage name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="voyageCpDate"
+                  >Voyage CP Date
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="voyageCpDate"
+                    nzFormat="dd/MM/YYYY"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="messageDate"
+                  >Message Date
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="messageDate"
+                    nzFormat="dd/MM/YYYY"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="messageTime"
+                  >Message Time
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [ngModel]="time"
+                    [nzUse12Hours]="false"
+                    formControlName="messageTime"
+                  ></nz-time-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="3" [nzSm]="24" nzFor="timeZone"
+                  >Time Zone
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="21"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select nzPlaceHolder="Select" formControlName="timeZone">
+                    <nz-option
+                      *ngFor="let time of timeZones"
+                      [nzValue]="time.text"
+                      [nzLabel]="time.text"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="3"
+                  [nzMd]="5"
+                  [nzSm]="24"
+                  nzFor="voyageChartererListed"
+                  >Voyage charterer (listed)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="21"
+                  [nzMd]="19"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="voyageChartererListed"
+                  >
+                    <nz-option nzValue="char1" nzLabel="Char 1"></nz-option>
+                    <nz-option nzValue="char2" nzLabel="Char 2"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="3"
+                  [nzMd]="5"
+                  [nzSm]="24"
+                  nzFor="voyageChartererNotListed"
+                  >Voyage charterer (Unlisted)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="21"
+                  [nzMd]="19"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="voyageChartererNotListed"
+                    type="text"
+                    placeholder=" Voyage charterer"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="3"
+                  [nzMd]="5"
+                  [nzSm]="24"
+                  nzFor="agentListed"
+                  >Agent (listed)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="21"
+                  [nzMd]="19"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="agentListed"
+                  >
+                    <nz-option
+                      nzValue="agent list 1"
+                      nzLabel="agent list 1"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="agent list 2"
+                      nzLabel="agent list 2"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="3"
+                  [nzMd]="5"
+                  [nzSm]="24"
+                  nzFor="agentNotListed"
+                  >Agent (Unlisted)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="21"
+                  [nzMd]="19"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="agentNotListed"
+                    type="text"
+                    placeholder="Agent"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="agentPic"
+                  >Agent PIC
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="agentPic"
+                    type="text"
+                    placeholder="Agent PIC"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="agentTel"
+                  >Agent Telephone
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  [nzErrorTip]="errorPhoneNumber"
+                >
+                  <input
+                    nz-input
+                    formControlName="agentTel"
+                    type="text"
+                    placeholder="Agent telephone"
+                  />
+                  <ng-template #errorPhoneNumber let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!-- Port Details -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Port Details">
+        <div formGroupName="portDetails">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="8"
+                  [nzSm]="24"
+                  nzFor="noonPortListed"
+                  >Noon Port (listed)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="noonPortListed"
+                  >
+                    <nz-option nzValue="port1" nzLabel="Port 1"></nz-option>
+                    <nz-option nzValue="port2" nzLabel="Port 2"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="9"
+                  [nzSm]="24"
+                  nzFor="noonPortNotListed"
+                  >Noon Port (Unlisted)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="15"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="noonPortNotListed"
+                    type="text"
+                    placeholder=" Port"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="8"
+                  [nzSm]="24"
+                  nzFor="portActivity1Listed"
+                  >Port Activity 1 (listed)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="portActivity1Listed"
+                  >
+                    <nz-option
+                      nzValue="activity1"
+                      nzLabel="Activity 1"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="activity2"
+                      nzLabel="Activity 2"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="9"
+                  [nzSm]="24"
+                  nzFor="portActivity1NotListed"
+                  >Port Activity 1 (Unlisted)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="15"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="portActivity1NotListed"
+                    type="text"
+                    placeholder=" Port activity 1"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="8"
+                  [nzSm]="24"
+                  nzFor="portActivity2Listed"
+                  >Port Activity 2 (listed)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select"
+                    formControlName="portActivity2Listed"
+                  >
+                    <nz-option
+                      nzValue="activity1"
+                      nzLabel="Activity 1"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="activity2"
+                      nzLabel="Activity 2"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="9"
+                  [nzSm]="24"
+                  nzFor="portActivity2NotListed"
+                  >Port Activity 2 (Unlisted)
+                </nz-form-label>
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="15"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="portActivity2NotListed"
+                    type="text"
+                    placeholder=" Port activity 2"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzXXl]="6" [nzMd]="8" [nzSm]="24" nzFor="anchor"
+                  >At Anchor or Alongside</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-select
+                    nzPlaceHolder="Select At Anchor"
+                    formControlName="anchor"
+                  >
+                    <nz-option nzValue="anchor1" nzLabel="Anchor 1"></nz-option>
+                    <nz-option nzValue="anchor2" nzLabel="Anchor 2"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="6"
+                  [nzMd]="9"
+                  [nzSm]="24"
+                  nzFor="coverDistance"
+                  >Covered Distance [NM]</nz-form-label
+                >
+                <nz-form-control
+                  [nzXXl]="18"
+                  [nzMd]="15"
+                  [nzSm]="24"
+                  [nzErrorTip]="errorCoverDistance"
+                >
+                  <input
+                    nz-input
+                    formControlName="coverDistance"
+                    type="text"
+                    placeholder="0"
+                  />
+                  <ng-template #errorCoverDistance let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+              <strong>* In case of moving between anchorage and berth</strong>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!-- ETC & ETD -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="ETC & ETD">
+        <div formGroupName="etcAndEtd">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="etcDate"
+                  >ETC date [LT]
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="etcDate"
+                    nzFormat="dd/MM/YYYY"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="etcTime"
+                  >ETC time [LT]
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [ngModel]="time"
+                    [nzUse12Hours]="false"
+                    formControlName="etcTime"
+                  ></nz-time-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="etdDate"
+                  >ETD date [LT]
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="etdDate"
+                    nzFormat="dd/MM/YYYY"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="etdTime"
+                  >ETD time [LT]
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [ngModel]="time"
+                    [nzUse12Hours]="false"
+                    formControlName="etdTime"
+                  ></nz-time-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!-- Bunker Consumption since last report [MT] -->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Bunker Consumption since last report [MT]">
+        <div formGroupName="bunkerReport">
+          <div nz-row [nzGutter]="16">
+            <nz-table
+              nzShowPagination="false"
+              [nzData]="[1, 2, 3, 4]"
+              [nzScroll]="{ x: '1250px' }"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="bunkerActivity"
+                      >Bunker Activity</nz-form-label
+                    >
+                  </th>
+                  <th style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="engineType"
+                      >Engine Type</nz-form-label
+                    >
+                  </th>
+                  <th style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="fuelType"
+                      >Fuel Type</nz-form-label
+                    >
+                  </th>
+
+                  <th nzWidth="200px" style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="bunkerInput"
+                      >Bunker Input</nz-form-label
+                    >
+                  </th>
+                  <th nzWidth="200px" style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="bunkerDate1"
+                      >Bunker Date1</nz-form-label
+                    >
+                  </th>
+                  <th nzWidth="200px" style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="bunkerDate2"
+                      >Bunker Date 2</nz-form-label
+                    >
+                  </th>
+
+                  <th style="text-align: center">
+                    <nz-form-label [nzSpan]="24" nzFor="action"
+                      >Action</nz-form-label
+                    >
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  formArrayName="bunkerDetails"
+                  *ngFor="
+                    let item of bunkerDetailsFormArray.controls;
+                    index as i
+                  "
+                >
+                  <ng-container [formGroupName]="i">
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <nz-select
+                          formControlName="bunkerActivity"
+                          nzPlaceHolder="Select"
+                          style="width: 100%"
+                        >
+                          <nz-option nzValue="activity 1" nzLabel="activity 1">
+                          </nz-option>
+                          <nz-option nzValue="activity 2" nzLabel="activity 2">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <nz-select
+                          formControlName="engineType"
+                          nzPlaceHolder="Select"
+                          style="width: 100%"
+                        >
+                          <nz-option
+                            nzValue="engineType 1"
+                            nzLabel="engineType 1"
+                          >
+                          </nz-option>
+                          <nz-option
+                            nzValue="engineType 2"
+                            nzLabel="engineType 2"
+                          >
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <nz-select
+                          formControlName="fuelType"
+                          nzPlaceHolder="Select"
+                          style="width: 100%"
+                        >
+                          <nz-option nzValue="fuelType 1" nzLabel="fuelType 1">
+                          </nz-option>
+                          <nz-option nzValue="fuelType 1" nzLabel="fuelType 1">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <input nz-input formControlName="bunkerInput" />
+                      </nz-form-control>
+                    </td>
+
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <nz-date-picker
+                          formControlName="bunkerDate1"
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <nz-date-picker
+                          formControlName="bunkerDate2"
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </td>
+                  </ng-container>
+
+                  <td>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      nzDanger
+                      *ngIf="bunkerDetailsFormArray.length > 1"
+                      nz-popconfirm
+                      nzPopconfirmTitle="Are you sure?"
+                      nzPopconfirmPlacement="left"
+                      (nzOnConfirm)="removeBunkerDetails(i)"
+                    >
+                      <i nz-icon nzType="delete"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <nz-divider [nzText]="AddBunkertmp"></nz-divider>
+            <ng-template #AddBunkertmp>
+              <button
+                class="addBtn"
+                nz-button
+                nzType="primary"
+                (click)="addBunkerDetails()"
+              >
+                Click here to insert new consumption
+              </button>
+            </ng-template>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="5"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="activityReason"
+                  >Define the reason in case of Other Activity</nz-form-label
+                >
+                <nz-form-control [nzXXl]="19" [nzMd]="17" [nzSm]="24">
+                  <input
+                    nz-input
+                    formControlName="activityReason"
+                    type="text"
+                    placeholder="Define the reason in case of Other Activity"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label
+                  [nzXXl]="5"
+                  [nzMd]="7"
+                  [nzSm]="24"
+                  nzFor="boilerReason"
+                  >Define the reason in case of use of Boiler</nz-form-label
+                >
+                <nz-form-control [nzXXl]="19" [nzMd]="17" [nzSm]="24">
+                  <input
+                    nz-input
+                    formControlName="boilerReason"
+                    type="text"
+                    placeholder="Define the reason in case of use of Boiler"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Fuel & FW ROB [MT]-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Fuel & FW ROB [MT]">
+        <div formGroupName="rob">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorFO">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="FO [MT]"
+                      readonly
+                      style="width: 30%; background-color: #843c0c; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="fo"
+                      placeholder="0"
+                      style="width: 70%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorFO let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorVLSFO">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="VLSFO [MT]"
+                      readonly
+                      style="width: 30%; background-color: #843c0c; color: #fff"
+                    />
+
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="vlsfo"
+                      placeholder="0"
+                      style="width: 70%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorVLSFO let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorULSFO">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ULSFO [MT]"
+                      readonly
+                      style="width: 30%"
+                      style="width: 30%; background-color: #843c0c; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="ulsfo"
+                      placeholder="0"
+                      style="width: 70%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorULSFO let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorGO">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="GO [MT]"
+                      readonly
+                      style="width: 30%; background-color: #c55a11; color: #fff"
+                    />
+
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="go"
+                      placeholder="0"
+                      style="width: 70%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorGO let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorLSGO">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="LSGO [MT]"
+                      readonly
+                      style="width: 30%; background-color: #c55a11; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="lsgo"
+                      placeholder="0"
+                      style="width: 70%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorLSGO let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorFW">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="FW [MT]"
+                      readonly
+                      style="width: 30%; background-color: #2e75b6; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="fw"
+                      placeholder="0"
+                      style="width: 70%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorFW let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--LubOil ROB-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Lub.Oil ROB [MT]">
+        <div formGroupName="lubOilRob">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorMeSystemOil">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME System Oil [Ltr]"
+                      readonly
+                      style="width: 35%; background-color: #bf9000; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="meSystemOil"
+                      placeholder="0"
+                      style="width: 65%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorMeSystemOil let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Only type number!
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorOilHs">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME Cylinder Oil HS [Ltr]"
+                      readonly
+                      style="width: 35%; background-color: #bf9000; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="oilHs"
+                      placeholder="0"
+                      style="width: 65%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorOilHs let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorOilLs">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME Cylinder Oil LS [Ltr]"
+                      readonly
+                      style="width: 35%; background-color: #bf9000; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="oilLs"
+                      placeholder="0"
+                      style="width: 65%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorOilLs let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorAeOil">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="AE Oil [Ltr]"
+                      readonly
+                      style="width: 35%; background-color: #bf9000; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="aeOil"
+                      placeholder="0"
+                      style="width: 65%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorAeOil let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Engines Running Hours-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Engines running hours">
+        <div formGroupName="enginesRunningHours">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorme1">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME 1 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #595959; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="me1"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorme1 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorme2">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME 2 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #595959; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="me2"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorme2 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorme3">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME 3 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #595959; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="me3"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorme3 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorme4">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="ME 4 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #595959; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="me4"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorme4 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorae1">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="AE 1 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #a6a6a6; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="ae1"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorae1 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorae2">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="AE 2 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #a6a6a6; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="ae2"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorae2 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorae3">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="AE 3 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #a6a6a6; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="ae3"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorae3 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="6" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorae4">
+                  <nz-input-group nzCompact>
+                    <input
+                      type="text"
+                      nz-input
+                      value="AE 4 [Hrs]"
+                      readonly
+                      style="width: 38%; background-color: #a6a6a6; color: #fff"
+                    />
+                    <input
+                      type="text"
+                      nz-input
+                      formControlName="ae4"
+                      placeholder="0"
+                      style="width: 62%"
+                    />
+                  </nz-input-group>
+                  <ng-template #errorae4 let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter valid number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Cargo on board at time of reporting (if cargo operations underway)-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card
+        nzTitle="Cargo on board at time of reporting (if cargo operations underway)"
+      >
+        <div formGroupName="cargoOperations">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-table nzShowPagination="false" [nzData]="[1, 2, 3, 4]">
+                <thead>
+                  <tr>
+                    <th nzWidth="170px" style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="engine"
+                        >Item</nz-form-label
+                      >
+                    </th>
+
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="cargo"
+                        >Cargo 1</nz-form-label
+                      >
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="cargo"
+                        >Cargo 2</nz-form-label
+                      >
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="cargo"
+                        >Cargo 3</nz-form-label
+                      >
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="cargo"
+                        >Cargo 4</nz-form-label
+                      >
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <nz-form-label [nzSpan]="24">Grade name: </nz-form-label>
+                    </td>
+
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo1GradeName"
+                          placeholder="Enter name"
+                        />
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo2GradeName"
+                          placeholder="Enter name"
+                        />
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo3GradeName"
+                          placeholder="Enter name"
+                        />
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        nzErrorTip="Should not be blank"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo4GradeName"
+                          placeholder="Enter name"
+                        />
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <nz-form-label [nzSpan]="24"
+                        >Quantity on board at time of reporting [MT]:
+                      </nz-form-label>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errorcargo1Qty"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo1Qty"
+                          placeholder="0"
+                        />
+                        <ng-template #errorcargo1Qty let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Should not be blank
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errorcargo2Qty"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo2Qty"
+                          placeholder="0"
+                        />
+                        <ng-template #errorcargo2Qty let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Should not be blank
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errorcargo3Qty"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo3Qty"
+                          placeholder="0"
+                        />
+                        <ng-template #errorcargo3Qty let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Should not be blank
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                    <td>
+                      <nz-form-control
+                        [nzSpan]="24"
+                        [nzErrorTip]="errorcargo4Qty"
+                      >
+                        <input
+                          nz-input
+                          formControlName="cargo4Qty"
+                          placeholder="0"
+                        />
+                        <ng-template #errorcargo4Qty let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Should not be blank
+                          </ng-container>
+                          <ng-container *ngIf="control.hasError('pattern')">
+                            Enter valid number
+                          </ng-container>
+                        </ng-template>
+                      </nz-form-control>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Any delays or stoppages on vessel account-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Any delays or stoppages on vessel account">
+        <div formGroupName="delay">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <textarea
+                  nz-input
+                  formControlName="reasonDelay"
+                  placeholder="Any delays or stoppages on vessel account"
+                ></textarea>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Brief time sheet since arrival port-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Brief time sheet since arrival port">
+        <div formGroupName="timeSheet">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-control [nzSpan]="24" nzErrorTip="Should not be blank">
+                  <textarea
+                    nz-input
+                    formControlName="briefTime"
+                    placeholder="Brief time sheet since arrival port"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Remarks-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Remarks">
+        <div formGroupName="remarks">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-form-item>
+                <textarea
+                  nz-input
+                  formControlName="remarksDes"
+                  placeholder="Remarks"
+                ></textarea>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Back
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Print
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Export
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+  </div>
+</form>

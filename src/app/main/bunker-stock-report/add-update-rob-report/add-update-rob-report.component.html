@@ -1,0 +1,2990 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="idForUpdate ? 'Update ROB Report' : 'Add New ROB Report'"
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      (click)="submit()"
+    >
+      Save
+    </button>
+    <!-- <button nz-button class="btncls">Sync</button> -->
+    <a routerLink="/main/bunker-stock-report/rob-report">
+      <button nz-button class="btncls">Back</button></a
+    >
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form [formGroup]="robReportForm">
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Measurement Data">
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="imo"
+                >Date
+              </nz-form-label>
+
+              <nz-form-control [nzMd]="12" [nzSm]="24" nzErrorTip="">
+                <nz-date-picker
+                  style="width: 100%"
+                  formControlName="ROB_Report_Date"
+                  nzFormat="dd/MM/YYYY"
+                ></nz-date-picker>
+              </nz-form-control>
+              <nz-form-control [nzMd]="2"></nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- 2nd row trial -->
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="7" [nzSm]="25" nzFor="imo"
+                >Add. Comments
+              </nz-form-label>
+
+              <nz-form-control [nzMd]="15" [nzSm]="25">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="ROB_Report_AddComments"
+                  placeholder="Add. Comments"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+      <nz-divider></nz-divider>
+      <ng-container *ngIf="localUser?.Unique_Group != 'SUPPLY'">
+        <nz-card nzTitle="Fuel Oil Tanks">
+          <div nz-row [nzGutter]="16">
+            <!-- 1st row -->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_01_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_01_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_01"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_01_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_01_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_01_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{
+                          data.Start_Date_Of_Fuel_Bunkered | date: 'dd/MMM/yy'
+                        }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!-- end 1st row -->
+
+            <!-- 2nd row -->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_02_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_02_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_02"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_02_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_02_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_02_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!-- end 2nd row-->
+            <!-- 3rd row -->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_03_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_03_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_03"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_03_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_03_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_03_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!-- end 3rd row -->
+
+            <!--4th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_04_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_04_Label }}[m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_04"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_04_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_04_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_04_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!-- end 4th row-->
+
+            <!--5th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_05_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_05_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_05"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_05_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_05_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_05_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 5th row-->
+            <!--6th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_06_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_06_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_06"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_06_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_06_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_06_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 6th row-->
+            <!--7th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_07_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_07_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_07"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_07_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_07_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_07_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 7th row-->
+            <!--8th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_08_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_08_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_08"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_08_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_08_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_08_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 8th row-->
+            <!--9th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_09_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_09_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_09"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_09_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_09_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_09_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 9th row-->
+            <!--10th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_10_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_10_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_10"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_10_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_10_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_10_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 10th row-->
+            <!--11th row-->
+            <ng-container *ngIf="localUser?.ROB_Report_Fuel_Tank_11_Label">
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Fuel_Tank_11_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_11"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_11_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Fuel_Tank_11_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Fuel_Tank_11_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 11th row-->
+          </div>
+        </nz-card>
+
+        <nz-divider></nz-divider>
+
+        <nz-card nzTitle="MGO / MDO Tanks">
+          <div nz-row [nzGutter]="16">
+            <!--1st row -->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Diesel_Oil_Tank_01_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Diesel_Oil_Tank_01_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_01"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_01_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_01_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Diesel_Oil_Tank_01_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 1st row-->
+
+            <!--2nd row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Diesel_Oil_Tank_02_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Diesel_Oil_Tank_02_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_02"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_02_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_02_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Diesel_Oil_Tank_02_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+
+            <!--end 2nd row-->
+            <!--3rd row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Diesel_Oil_Tank_03_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Diesel_Oil_Tank_03_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_03"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_03_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_03_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Diesel_Oil_Tank_03_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+
+            <!--end 3rd row-->
+            <!--4th row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Diesel_Oil_Tank_04_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{ localUser?.ROB_Report_Diesel_Oil_Tank_04_Label }} [m
+                    <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_04"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_04_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Diesel_Oil_Tank_04_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Diesel_Oil_Tank_04_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+
+            <!--end 4th row-->
+          </div>
+        </nz-card>
+
+        <nz-divider> </nz-divider>
+
+        <nz-card nzTitle="Misc. Fuel Tanks">
+          <div nz-row [nzGutter]="16">
+            <!--1st row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Miscellaneous_Oil_Tanks_01_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{
+                      localUser?.ROB_Report_Miscellaneous_Oil_Tanks_01_Label
+                    }}
+                    [m <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_01"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_01_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_01_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_01_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 1st row-->
+            <!--2nd row-->
+
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Miscellaneous_Oil_Tanks_02_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{
+                      localUser?.ROB_Report_Miscellaneous_Oil_Tanks_02_Label
+                    }}
+                    [m <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_02"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_02_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_02_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_02_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 2nd row-->
+            <!--3rd row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Miscellaneous_Oil_Tanks_03_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{
+                      localUser?.ROB_Report_Miscellaneous_Oil_Tanks_03_Label
+                    }}
+                    [m <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_03"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_03_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_03_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_03_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 3rd row-->
+            <!--4th row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Miscellaneous_Oil_Tanks_04_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{
+                      localUser?.ROB_Report_Miscellaneous_Oil_Tanks_04_Label
+                    }}
+                    [m <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_04"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_04_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_04_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_04_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 4th row-->
+            <!--5th row-->
+            <ng-container
+              *ngIf="localUser?.ROB_Report_Miscellaneous_Oil_Tanks_05_Label"
+            >
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="7"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="17" [nzSm]="24" nzFor="vesselName"
+                    >{{
+                      localUser?.ROB_Report_Miscellaneous_Oil_Tanks_05_Label
+                    }}
+                    [m <sup>3</sup>]</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="6"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-right: 0px !important"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_05"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+
+                  <nz-form-label
+                    [nzMd]="1"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                    style="padding-left: 6px; margin-left: 7px"
+                    >/</nz-form-label
+                  >
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="5"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-control
+                    [nzMd]="11"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 4px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_05_Capacity"
+                      type="text"
+                      placeholder=" Enter Fuel Grade"
+                      readonly
+                      class="total-count"
+                    /> </nz-form-control
+                ></nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="4"
+                [nzSm]="24"
+                style="padding-right: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label [nzMd]="11" [nzSm]="24" nzFor="vesselName"
+                    >Temp. (°C)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    [nzMd]="13"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 15px"
+                  >
+                    <input
+                      nz-input
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_05_Temp"
+                      type="text"
+                      placeholder=""
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                class="gutter-row"
+                [nzMd]="8"
+                [nzSm]="24"
+                style="padding-left: 0px !important"
+              >
+                <nz-form-item>
+                  <nz-form-label
+                    class="padding5"
+                    [nzMd]="4"
+                    [nzSm]="24"
+                    nzFor="vesselName"
+                  >
+                    Type
+                  </nz-form-label>
+                  <nz-form-control
+                    [nzMd]="17"
+                    [nzSm]="24"
+                    nzErrorTip=""
+                    style="padding-left: 10px"
+                  >
+                    <nz-select
+                      nzPlaceHolder="Select"
+                      formControlName="ROB_Report_Miscellaneous_Oil_Tanks_05_Type"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzServerSearch
+                      (nzOnSearch)="searchSubjectForDropdown($event)"
+                    >
+                      <nz-option
+                        *ngFor="let data of allBunkerStockReports"
+                        nzValue="{{ data._id }}"
+                        nzLabel="{{ data.Fuel_Type }}_{{
+                          data.Location_Of_Fuel_Bunkered
+                        }}_{{ data.createdAt | date: 'dd/MMM/yy' }}"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+            <!--end 5th row-->
+          </div>
+        </nz-card>
+
+        <nz-divider></nz-divider>
+        <nz-card nzTitle="Lub. Oil ROB">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >M.E Sys. Oil [Ltrs]</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="13" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Lubrication_Oil_Tanks_1"
+                    placeholder="M.E Sys. Oil [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >M.E Cyl. Oil 1 [Ltrs]
+                </nz-form-label>
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Lubrication_Oil_Tanks_2"
+                    placeholder="M.E Cyl. Oil 1 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >A.E Sys. Oil [Ltrs]
+                </nz-form-label>
+
+                <nz-form-control [nzMd]="13" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Lubrication_Oil_Tanks_3"
+                    placeholder="A.E Sys. Oil [Ltrs] "
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >M.E Cyl. Oil 2 [Ltrs]
+                </nz-form-label>
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Lubrication_Oil_Tanks_4"
+                    placeholder="M.E Cyl. Oil 2 [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-card>
+      </ng-container>
+      <ng-container *ngIf="localUser?.Unique_Group === 'SUPPLY'">
+        <nz-card nzTitle="Remaining on Board">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >Fuel Oil [Ltrs]
+                </nz-form-label>
+
+                <nz-form-control [nzMd]="13" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Supply_Vessel_Tank_01"
+                    placeholder="Fuel Oil [Ltrs]	"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Lub. Oil [Ltrs]
+                </nz-form-label>
+
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Supply_Vessel_Tank_02"
+                    placeholder="Lub. Oil [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >Diesel Oil [Ltrs]
+                </nz-form-label>
+
+                <nz-form-control [nzMd]="13" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Supply_Vessel_Tank_03"
+                    placeholder="Diesel Oil [Ltrs] "
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Fresh Water [Ltrs]
+                </nz-form-label>
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Supply_Vessel_Tank_04"
+                    placeholder="Fresh Water [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >Gas Oil [Ltrs]
+                </nz-form-label>
+                <nz-form-control [nzMd]="13" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Supply_Vessel_Tank_05"
+                    placeholder="Gas Oil [Ltrs]	"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Bilge / Sludge [Ltrs]
+                </nz-form-label>
+                <nz-form-control [nzMd]="14" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="ROB_Report_Supply_Vessel_Tank_06"
+                    placeholder="Bilge / Sludge [Ltrs]"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-card>
+      </ng-container>
+    </div>
+  </div>
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      style="margin-right: 12px"
+      (click)="submit()"
+    >
+      Save
+    </button>
+    <!-- <button nz-button class="btncls">Sync</button> -->
+    <a routerLink="/main/bunker-stock-report/rob-report"
+      ><button nz-button nzType="primary" class="btncls">Back</button></a
+    >
+  </div>
+  <nz-divider></nz-divider>
+</form>

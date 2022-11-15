@@ -1,0 +1,96 @@
+<ng-container>
+  <div class="site-page-header-ghost-wrapper">
+    <nz-page-header [nzGhost]="false">
+      <nz-page-header-title>Vessel Logs Report </nz-page-header-title>
+      <nz-page-header-extra>
+        <button
+          nz-button
+          nzType="primary"
+          [routerLink]="['add']"
+          routerLinkActive="router-link-active"
+          class="btncls"
+        >
+          Add new report
+        </button>
+        <!-- <a routerLink="/main/performance-report/dashboard"
+          ><button nz-button class="btncls">Back</button></a
+        > -->
+      </nz-page-header-extra>
+    </nz-page-header>
+  </div>
+  <div nz-row nzJustify="end"></div>
+  <nz-card>
+    <nz-table
+      #reportTbl
+      [nzData]="allReports"
+      [nzLoading]="loading"
+      [nzTotal]="totalDataCount"
+      [(nzPageSize)]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      nzShowSizeChanger
+    >
+      <thead>
+        <tr>
+          <th nzWidth="10%">Time</th>
+          <th nzWidth="24%">Vessel Status</th>
+          <th nzWidth="10%" style="text-align: center">START DATE</th>
+          <th nzWidth="10%" style="text-align: center">START TIME</th>
+          <th nzWidth="10%" style="text-align: center">END DATE</th>
+          <th nzWidth="10%" style="text-align: center">END TIME</th>
+          <th nzWidth="16%" style="text-align: center">Action</th>
+          <th nzWidth="10%" style="text-align: center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of reportTbl.data; index as i">
+          <td>
+            {{ data.DailyLogs_VslActivity_VesselStatus_Time | date: "HH:mm" }}
+          </td>
+          <td>{{ data.DailyLogs_VslActivity_VesselStatus_Activity }}</td>
+          <td style="text-align: center">
+            {{ data.DailyLogs_VslActivity_StartDate | date: "dd-MMM-yy" }}
+          </td>
+          <td style="text-align: center">
+            {{ data.DailyLogs_VslActivity_StartTime | date: "HH:mm" }}
+          </td>
+          <td style="text-align: center">
+            {{ data.DailyLogs_VslActivity_EndDate | date: "dd-MMM-yy" }}
+          </td>
+          <td style="text-align: center">
+            {{ data.DailyLogs_VslActivity_EndTime | date: "HH:mm" }}
+          </td>
+
+          <td
+            class="action-buttons"
+            style="display: flex; justify-content: center"
+          >
+            <a
+              style="margin-right: 12px"
+              *ngIf="isAdmin"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              routerLinkActive="router-link-active"
+              (nzOnConfirm)="delete(data._id)"
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+            <a
+              style="margin-right: 12px"
+              nzTooltipTitle="Edit"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              routerLinkActive="router-link-active"
+              [routerLink]="['update', data._id]"
+              ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+            /></a>
+          </td>
+          <td><span class="active status"></span></td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</ng-container>

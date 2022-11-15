@@ -1,0 +1,75 @@
+<div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Engine Reports </nz-page-header-title>
+    <nz-page-header-extra>
+      <button
+        nz-button
+        nzType="primary"
+        [routerLink]="['add']"
+        routerLinkActive="router-link-active"
+        class="btncls"
+      >
+        Add new report
+      </button>
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div nz-row nzJustify="end">
+  <!-- <div nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" class="mb5">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input
+          type="text"
+          nz-input
+          placeholder="Search by branch name"
+          ngModel
+          (ngModelChange)="searchBranches($event)"
+        />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div> -->
+</div>
+<nz-card>
+  <nz-table
+    #noonReportTbl
+    [nzData]="allReports"
+    [nzLoading]="loading"
+    [nzTotal]="totalDataCount"
+    [(nzPageSize)]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzShowSizeChanger
+    [nzScroll]="{ x: '900px' }"
+  >
+    <thead>
+      <tr>
+        <!-- <th nzColumnKey="name">Report Type</th> -->
+        <th>Vessel Name</th>
+        <th>IMO</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of noonReportTbl.data; index as i">
+        <!-- <td>{{ data.vesselDetails.reportType }}</td> -->
+        <td>{{ data.vesselDetails?.vesselName }}</td>
+        <td>{{ data.vesselDetails?.imo }}</td>
+
+        <td class="action-buttons">
+          <a
+            nz-button
+            nzType="primary"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            [routerLink]="['update', data._id]"
+            routerLinkActive="router-link-active"
+            ><i nz-icon nzType="form" nzTheme="outline"></i
+          ></a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

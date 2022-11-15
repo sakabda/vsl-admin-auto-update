@@ -1,0 +1,176 @@
+<form class="noonForm" nz-form [formGroup]="emailForm">
+  <div nz-row [nzGutter]="24">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-form-label [nzMd]="24" [nzSm]="24" nzFor="vesselName"
+        >To</nz-form-label
+      >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="Should not be blank">
+        <input
+          nz-input
+          formControlName="toEmail"
+          type="email"
+          multiple="multiple"
+          placeholder="to@company.ca, to@company.ca..."
+        />
+      </nz-form-control>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col class="gutter-row" [nzMd]="20" [nzSm]="24"></div>
+    <div nz-col class="gutter-row" [nzMd]="2" [nzSm]="2">
+      <nz-form-control [nzMd]="24" [nzSm]="24" style="margin-top: -31px">
+        <span style="cursor: pointer" (click)="showHideCcInput()">
+          Cc</span
+        ></nz-form-control
+      >
+    </div>
+    <div nz-col class="gutter-row" [nzMd]="2" [nzSm]="2">
+      <nz-form-control [nzMd]="24" [nzSm]="24" style="margin-top: -31px">
+        <span style="cursor: pointer" (click)="showHideBccInput()">
+          Bcc</span
+        ></nz-form-control
+      >
+    </div>
+  </div>
+
+  <div nz-row [nzGutter]="24" *ngIf="!showCcContent">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-form-label [nzMd]="24" [nzSm]="24" nzFor="vesselName"
+        >Cc</nz-form-label
+      >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" *ngIf="!showCcContent">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="Should not be blank">
+        <input
+          nz-input
+          formControlName="ccEmail"
+          type="email"
+          multiple="multiple"
+          placeholder="to@company.ca, to@company.ca..."
+        />
+      </nz-form-control>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" *ngIf="!showBccContent">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-form-label [nzMd]="24" [nzSm]="24" nzFor="vesselName"
+        >Bcc</nz-form-label
+      >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" *ngIf="!showBccContent">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="Should not be blank">
+        <input
+          nz-input
+          formControlName="bccEmail"
+          type="email"
+          multiple="multiple"
+          placeholder="to@company.ca, to@company.ca..."
+        />
+      </nz-form-control>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <table class="memberdetails">
+    <tbody>
+      <tr *ngIf="bunkerStockInfo.Fuel_Grade">
+        <th>Fuel Grade :</th>
+        <td>{{ bunkerStockInfo.Fuel_Grade }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Fuel_Type">
+        <th>Fuel Type :</th>
+        <td>{{ bunkerStockInfo.Fuel_Type }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Viscosity_At_50_Degree_Celcius">
+        <th>Viscosity @ 50 Deg. C:</th>
+
+        <td>{{ bunkerStockInfo.Viscosity_At_50_Degree_Celcius }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Density_At_15_Degree_Celcius">
+        <th>Density @15 Deg. C:</th>
+        <td>{{ bunkerStockInfo.Density_At_15_Degree_Celcius }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Quantity_Of_Fuel_Bunkered">
+        <th>Quantity Bunkered:</th>
+
+        <td>{{ bunkerStockInfo.Quantity_Of_Fuel_Bunkered }}</td>
+      </tr>
+
+      <tr *ngIf="bunkerStockInfo.Start_Date_Of_Fuel_Bunkered">
+        <th>Start Date:</th>
+
+        <td>
+          {{ bunkerStockInfo.Start_Date_Of_Fuel_Bunkered | date: "dd-MMM-yy" }}
+        </td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.End_Date_Of_Fuel_Bunkered">
+        <th>End Date:</th>
+
+        <td>
+          {{ bunkerStockInfo.End_Date_Of_Fuel_Bunkered | date: "dd-MMM-yy" }}
+        </td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Sulphur_Percentage_In_Bunkered_Fuel">
+        <th>Sulphur %:</th>
+
+        <td>{{ bunkerStockInfo.Sulphur_Percentage_In_Bunkered_Fuel }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Start_Time_Of_Fuel_Bunkered">
+        <th>Start Time:</th>
+
+        <td>
+          {{ bunkerStockInfo.Start_Time_Of_Fuel_Bunkered | date: "h:mm:ss a" }}
+        </td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.End_Time_Of_Fuel_Bunkered">
+        <th>End Time:</th>
+
+        <td>
+          {{ bunkerStockInfo.End_Time_Of_Fuel_Bunkered | date: "h:mm:ss a" }}
+        </td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Water_Percentage_In_Bunkered_Fuel">
+        <th>Water Content %:</th>
+
+        <td>{{ bunkerStockInfo.Water_Percentage_In_Bunkered_Fuel }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Barge_Name_Of_Fuel_Bunkered">
+        <th>Barge Name:</th>
+
+        <td>{{ bunkerStockInfo.Barge_Name_Of_Fuel_Bunkered }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.CAT_Fines_AL_Si_Percentage_In_Bunkered_Fuel">
+        <th>CAT Fines (AL + Si):</th>
+
+        <td>
+          {{ bunkerStockInfo.CAT_Fines_AL_Si_Percentage_In_Bunkered_Fuel }}
+        </td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Location_Of_Fuel_Bunkered">
+        <th>Location:</th>
+
+        <td>{{ bunkerStockInfo.Location_Of_Fuel_Bunkered }}</td>
+      </tr>
+      <tr *ngIf="bunkerStockInfo.Additional_Comments_Of_Fuel_Bunkered">
+        <th>Additional Comments:</th>
+
+        <td>
+          {{ bunkerStockInfo.Additional_Comments_Of_Fuel_Bunkered }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button nz-button nzType="primary" (click)="send()" class="btncls">
+      Send
+    </button>
+  </div>
+</form>

@@ -1,0 +1,29 @@
+.logo {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-block {
+  height: 830px;
+}
+
+.version-block {
+  background-color: #0d1d41;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  width: 250px;
+}
+
+.version-block p {
+  color: #ffffff;
+  margin: 0;
+  padding: 5px 0;
+}
+app-sidebar {
+  position: relative;
+  overflow-x: hidden;
+}

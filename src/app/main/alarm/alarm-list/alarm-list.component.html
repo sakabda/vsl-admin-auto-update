@@ -1,0 +1,50 @@
+<div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Alarms </nz-page-header-title>
+    <nz-page-header-extra>
+      <button
+        nz-button
+        nzType="primary"
+        [routerLink]="['add']"
+        routerLinkActive="router-link-active"
+        class="btncls"
+      >
+        Add / Edit Alarm
+      </button>
+      <a routerLink=""><button nz-button class="btncls">Back</button></a>
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div nz-row nzJustify="end"></div>
+<nz-card>
+  <nz-table>
+    <thead>
+      <tr>
+        <th nzWidth="10%">DATE</th>
+        <th nzWidth="20%">ALARM TYPE</th>
+        <th nzWidth="15%" style="text-align: center">VALUE</th>
+        <th nzWidth="15%" style="text-align: center">LOWER LIMIT</th>
+        <th nzWidth="15%" style="text-align: center">HIGHER LIMIT</th>
+        <th nzWidth="15%" style="text-align: center">ACTION</th>
+        <th nzWidth="10%" style="text-align: center">STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>22-May-22</td>
+        <td>Piston Cooling pressure[bar]</td>
+        <td style="text-align: center">8.2</td>
+        <td style="text-align: center">-</td>
+        <td style="text-align: center">6.0</td>
+
+        <td
+          class="action-buttons"
+          style="display: flex; justify-content: center"
+        >
+          <button nz-button class="btncls">Ack.</button>
+        </td>
+        <td><span class="inactive status"></span></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

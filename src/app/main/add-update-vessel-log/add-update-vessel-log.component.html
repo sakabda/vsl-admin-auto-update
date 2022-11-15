@@ -1,0 +1,601 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="idForUpdate ? 'Update Daily Logs' : 'Add Daily Logs'"
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      (click)="submit()"
+    >
+      Save
+    </button>
+    <a routerLink="/main/vessel-logs"
+      ><button nz-button class="btncls">Back</button></a
+    >
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form
+  class="noonForm dailyReport"
+  nz-form
+  [formGroup]="addUpdateDailyReportReportForm"
+>
+  <!-- Time period-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Time Period" class="card-box-sm">
+        <div nz-col nzSpan="24" class="chart-title"></div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <div nz-row [nzGutter]="8">
+              <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-label [nzMd]="24" [nzSm]="24" nzFor="vesselName"
+                    >Start date & time
+                  </nz-form-label>
+                </nz-form-item>
+              </div>
+              <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                      formControlName="DailyLogs_VslActivity_StartDate"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="">
+                    <nz-time-picker
+                      style="width: 100%"
+                      [nzUse12Hours]="false"
+                      nzFormat="HH:mm"
+                      formControlName="DailyLogs_VslActivity_StartTime"
+                    >
+                    </nz-time-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <div nz-row [nzGutter]="8">
+              <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="2"></nz-form-control>
+                  <nz-form-label [nzMd]="22" [nzSm]="24" nzFor="vesselName"
+                    >End date & time
+                  </nz-form-label>
+                </nz-form-item>
+              </div>
+              <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/YYYY"
+                      formControlName="DailyLogs_VslActivity_EndDate"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="24" [nzSm]="24" nzErrorTip="">
+                    <nz-time-picker
+                      style="width: 100%"
+                      [nzUse12Hours]="false"
+                      nzFormat="HH:mm"
+                      formControlName="DailyLogs_VslActivity_EndTime"
+                    >
+                    </nz-time-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!-- Vessel Status-->
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card class="card-box-sm" nzTitle="Vessel Status">
+        <div nz-col nzSpan="24" class="chart-title">
+          <div nz-row nzGutter="10" nzJustify="space-between">
+            <span
+              class="card_badge"
+              style="
+                margin-top: -73px;
+                margin-right: -24px;
+                background-color: #a6a6a6;
+              "
+              >Log
+            </span>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item nz-row [nzGutter]="8">
+              <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                >Time </nz-form-label
+              ><nz-form-control [nzMd]="16" [nzSm]="24" nzErrorTip="">
+                <nz-time-picker
+                  style="width: 100%"
+                  [nzUse12Hours]="false"
+                  nzFormat="HH:mm"
+                  formControlName="DailyLogs_VslActivity_VesselStatus_Time"
+                >
+                </nz-time-picker> </nz-form-control
+            ></nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+            <nz-form-item nz-row [nzGutter]="8">
+              <nz-form-control [nzMd]="1"></nz-form-control>
+              <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                >Activity</nz-form-label
+              >
+
+              <nz-form-control [nzMd]="16" [nzSm]="24" nzErrorTip="">
+                <input
+                  nz-input
+                  type="text"
+                  formControlName="DailyLogs_VslActivity_VesselStatus_Activity"
+                  placeholder=" Enter Activity"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+            <nz-form-item>
+              <nz-form-label [nzMd]="4" [nzSm]="24" nzFor="vesselName">
+                Add. Comments
+              </nz-form-label>
+              <nz-form-control [nzMd]="20" [nzSm]="24">
+                <input
+                  nz-input
+                  formControlName="DailyLogs_VslActivity_VesselStatus_AddComments"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!-- Deck Dept. -->
+
+  <ng-container
+    formArrayName="DailyLogs_VslActivity_DeckDept"
+    *ngFor="let item of optionsDeckDeptFormArray.controls; index as i"
+  >
+    <div nz-row [nzGutter]="16" [formGroupName]="i">
+      <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+        <nz-card class="card-box-sm" nzTitle="Deck Dept.">
+          <div nz-col nzSpan="24" class="chart-title">
+            <div nz-row nzGutter="10" nzJustify="space-between">
+              <span
+                class="card_badge"
+                style="
+                  margin-top: -73px;
+                  margin-right: -24px;
+                  background-color: #a6a6a6;
+                "
+                >Deck
+              </span>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Time </nz-form-label
+                ><nz-form-control [nzMd]="16" [nzSm]="24" nzErrorTip="">
+                  <nz-time-picker
+                    style="width: 100%"
+                    [nzUse12Hours]="false"
+                    nzFormat="HH:mm"
+                    formControlName="DailyLogs_VslActivity_DeckDept_Time"
+                  >
+                  </nz-time-picker> </nz-form-control
+              ></nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-control [nzMd]="1"></nz-form-control>
+                <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                  >Activity</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="16" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyLogs_VslActivity_DeckDept_Activity"
+                    placeholder=" Enter Activity"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName">
+                  Attachments
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 22px"
+                >
+                  <nz-upload
+                    class="avatar-uploader upload100"
+                    nzName="avatar"
+                    [nzShowUploadList]="false"
+                    [nzBeforeUpload]="beforeDeckDeptUpload"
+                    (nzChange)="handleUploadExplainDeckDept($event, i)"
+                    [nzAction]="mediaUploadUrl"
+                    [nzName]="'file'"
+                  >
+                    <ng-container>
+                      <button nz-button style="width: 100%; border-radius: 5px">
+                        <i
+                          class="upload-icon"
+                          nz-icon
+                          [nzType]="imgLoading ? 'loading' : 'plus'"
+                        ></i
+                        >Upload
+                      </button>
+                    </ng-container>
+                  </nz-upload>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <ng-container
+              *ngIf="extraForDeckDept[i] && extraForDeckDept[i].fileUrl"
+            >
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="10" [nzSm]="24">
+                    <a href="{{ extraForDeckDept[i].fileUrl }}"
+                      ><span>{{ extraForDeckDept[i].originalname }}</span></a
+                    >
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+  </ng-container>
+
+  <!-- add Deck button -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="guter-row" [nzMd]="16" [nzSm]="24"></div>
+    <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+      <button
+        nz-button
+        nzType="primary"
+        class="btncls"
+        [nzBlock]="true"
+        style="height: 40px"
+        *ngIf="
+          addUpdateDailyReportReportForm.value.DailyLogs_VslActivity_DeckDept
+            .length < 11
+        "
+        (click)="addDeckDept()"
+      >
+        Add New Deck Activity
+      </button>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!-- Engine Dept. -->
+  <ng-container
+    formArrayName="DailyLogs_VslActivity_EngineDept"
+    *ngFor="let item of optionsEngineDeptFormArray.controls; index as i"
+  >
+    <div nz-row [nzGutter]="16" [formGroupName]="i">
+      <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+        <nz-card class="card-box-sm" nzTitle="Engine Dept.">
+          <div nz-col nzSpan="24" class="chart-title">
+            <div nz-row nzGutter="10" nzJustify="space-between">
+              <span
+                class="card_badge"
+                style="
+                  margin-top: -73px;
+                  margin-right: -24px;
+                  background-color: #a6a6a6;
+                "
+                >Eng.
+              </span>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Time </nz-form-label
+                ><nz-form-control
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 22px"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [nzUse12Hours]="false"
+                    nzFormat="HH:mm"
+                    formControlName="DailyLogs_VslActivity_EngineDept_Time"
+                  >
+                  </nz-time-picker> </nz-form-control
+              ></nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-control [nzMd]="1"></nz-form-control>
+                <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                  >Activity</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="16" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyLogs_VslActivity_EngineDept_Activity"
+                    placeholder=" Enter Activity"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName">
+                  Attachments
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 22px"
+                >
+                  <nz-upload
+                    class="avatar-uploader upload100"
+                    nzName="avatar"
+                    [nzShowUploadList]="false"
+                    [nzBeforeUpload]="beforeEngineDeptUpload"
+                    (nzChange)="handleUploadExplainEngineDept($event, i)"
+                    [nzAction]="mediaUploadUrl"
+                    [nzName]="'file'"
+                  >
+                    <ng-container>
+                      <button nz-button style="width: 100%; border-radius: 5px">
+                        <i
+                          class="upload-icon"
+                          nz-icon
+                          [nzType]="imgLoading ? 'loading' : 'plus'"
+                        ></i
+                        >Upload
+                      </button>
+                    </ng-container>
+                  </nz-upload>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <ng-container
+              *ngIf="extraForEngineDept[i] && extraForEngineDept[i].fileUrl"
+            >
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="10" [nzSm]="24">
+                    <a href="{{ extraForEngineDept[i].fileUrl }}"
+                      ><span>{{ extraForEngineDept[i].originalname }}</span></a
+                    >
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+  </ng-container>
+  <!-- add Eng dept button -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="16" [nzSm]="24"></div>
+    <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+      <button
+        nz-button
+        nzType="primary"
+        class="btncls"
+        [nzBlock]="true"
+        style="height: 40px"
+        *ngIf="
+          addUpdateDailyReportReportForm.value.DailyLogs_VslActivity_EngineDept
+            .length < 11
+        "
+        (click)="addEngineDept()"
+      >
+        Add New Engine Activity
+      </button>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!-- Additional Information -->
+
+  <ng-container
+    formArrayName="DailyLogs_VslActivity_AddInfo"
+    *ngFor="let item of optionsAddInfoFormArray.controls; index as i"
+  >
+    <div nz-row [nzGutter]="16" [formGroupName]="i">
+      <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+        <nz-card class="card-box-sm" nzTitle="Additional Info">
+          <div nz-col nzSpan="24" class="chart-title">
+            <div nz-row nzGutter="10" nzJustify="space-between">
+              <span
+                class="card_badge"
+                style="
+                  margin-top: -73px;
+                  margin-right: -24px;
+                  background-color: #a6a6a6;
+                "
+                >Add. Info
+              </span>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName"
+                  >Time </nz-form-label
+                ><nz-form-control
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 22px"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [nzUse12Hours]="false"
+                    nzFormat="HH:mm"
+                    formControlName="DailyLogs_VslActivity_AddInfo_Time"
+                  >
+                  </nz-time-picker> </nz-form-control
+              ></nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-control [nzMd]="1"></nz-form-control>
+                <nz-form-label [nzMd]="7" [nzSm]="24" nzFor="vesselName"
+                  >Activity</nz-form-label
+                >
+
+                <nz-form-control [nzMd]="16" [nzSm]="24" nzErrorTip="">
+                  <input
+                    nz-input
+                    type="text"
+                    formControlName="DailyLogs_VslActivity_AddInfo_Activity"
+                    placeholder=" Enter Activity"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item nz-row [nzGutter]="8">
+                <nz-form-label [nzMd]="8" [nzSm]="24" nzFor="vesselName">
+                  Attachments
+                </nz-form-label>
+                <nz-form-control
+                  [nzMd]="16"
+                  [nzSm]="24"
+                  nzErrorTip=""
+                  style="padding-left: 22px"
+                >
+                  <nz-upload
+                    class="avatar-uploader upload100"
+                    nzName="avatar"
+                    [nzShowUploadList]="false"
+                    [nzBeforeUpload]="beforeAddInfoUpload"
+                    (nzChange)="handleUploadExplainAddInfo($event, i)"
+                    [nzAction]="mediaUploadUrl"
+                    [nzName]="'file'"
+                  >
+                    <ng-container>
+                      <button nz-button style="width: 100%; border-radius: 5px">
+                        <i
+                          class="upload-icon"
+                          nz-icon
+                          [nzType]="imgLoading ? 'loading' : 'plus'"
+                        ></i
+                        >Upload
+                      </button>
+                    </ng-container>
+                  </nz-upload>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <ng-container
+              *ngIf="extraForAddInfo[i] && extraForAddInfo[i].fileUrl"
+            >
+              <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+                <nz-form-item>
+                  <nz-form-control [nzMd]="10" [nzSm]="24">
+                    <a href="{{ extraForAddInfo[i].fileUrl }}"
+                      ><span>{{ extraForAddInfo[i].originalname }}</span></a
+                    >
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </ng-container>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+  </ng-container>
+
+  <!-- add info button -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="16" [nzSm]="24"></div>
+    <div nz-col class="gutter-row" [nzMd]="8" [nzSm]="24">
+      <button
+        nz-button
+        nzType="primary"
+        class="btncls"
+        [nzBlock]="true"
+        style="height: 40px"
+        *ngIf="
+          addUpdateDailyReportReportForm.value.DailyLogs_VslActivity_AddInfo
+            .length < 11
+        "
+        (click)="addInfo()"
+      >
+        Add New Additional Info
+      </button>
+    </div>
+  </div>
+
+  <nz-divider></nz-divider>
+
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+      style="margin-right: 12px"
+      (click)="submit()"
+    >
+      Save
+    </button>
+
+    <a routerLink="/main/vessel-logs"
+      ><button nz-button nzType="primary" class="btncls">Back</button></a
+    >
+  </div>
+</form>

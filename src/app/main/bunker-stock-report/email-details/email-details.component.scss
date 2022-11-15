@@ -1,0 +1,19 @@
+.memberdetails th,
+.memberdetails td {
+  padding: 5px 10px;
+  border: 1px solid #696161;
+  text-align: left;
+}
+
+.memberdetails {
+  width: 100%;
+}
+
+.memberdetails td {
+  font-weight: 500;
+}
+
+.memberdetails th {
+  font-weight: 600;
+  min-width: 130px;
+}

@@ -1,0 +1,55 @@
+.usinford {
+  margin-bottom: 20px;
+  overflow: hidden;
+  b {
+    font-size: 51px;
+    float: left;
+    line-height: 1;
+    font-weight: 600;
+    color: #555;
+  }
+  span {
+    float: right;
+    font-size: 30px;
+    color: #f15637;
+  }
+}
+p.readmoreinfo {
+  margin-bottom: 0px;
+  outline: none !important;
+  font-size: 12px;
+  color: #6291be;
+  cursor: pointer;
+  font-weight: 600;
+}
+p.readmoreinfo:hover {
+  color: #000;
+}
+
+.heading {
+  font-weight: normal;
+  color: #7d7d7d;
+}
+::ng-deep .dashboard-card {
+  background-color: #f2f1f1;
+  border-radius: 5px;
+  text-align: center;
+  padding: 15px;
+  margin: 0px 10px;
+  h4 {
+    color: #7d7d7d;
+    font-size: 18px;
+  }
+  p {
+    color: #7d7d7d;
+  }
+  .ant-card-body {
+    padding: 0px;
+  }
+  img {
+    max-width: 100%;
+    display: inline-block;
+    height: auto;
+    max-height: 150px;
+  }
+}

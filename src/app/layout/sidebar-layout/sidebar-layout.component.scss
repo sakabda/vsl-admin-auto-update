@@ -1,0 +1,21 @@
+.layout {
+  min-height: 100vh;
+  min-width: 100%;
+}
+
+nz-sider {
+  //box-shadow: 1px 1px 15px 2px;
+  box-shadow: none;
+  background: #091734;
+}
+
+.inner-content {
+  padding: 40px;
+  margin: 0px;
+  background: #fff;
+  min-height: 360px;
+}
+
+nz-footer {
+  text-align: left;
+}

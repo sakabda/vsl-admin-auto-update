@@ -1,0 +1,396 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate
+      ? 'Update report - Events reports'
+      : 'New report - Events reports'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+    <button nz-button class="btncls">Export</button>
+    <button nz-button class="btncls">Print</button>
+    <button nz-button class="btncls">Back</button>
+  </nz-page-header-extra>
+</nz-page-header>
+
+<form class="noonForm" nz-form [formGroup]="addUpdateEventsReportForm">
+  <!-- vessel details -->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Vessel details">
+        <div formGroupName="vesselDetails">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="vesselName"
+                  >Vessel Name *</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <input
+                    nz-input
+                    formControlName="vesselName"
+                    type="text"
+                    placeholder=" Enter vessel name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="imo"
+                  >IMO No *</nz-form-label
+                >
+
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  [nzErrorTip]="errorImo"
+                >
+                  <input
+                    nz-input
+                    formControlName="imo"
+                    type="text"
+                    placeholder=" Enter IMO No"
+                  />
+                  <ng-template #errorImo let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                      Should not be blank
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('pattern')">
+                      Enter 7 digit number
+                    </ng-container>
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+
+  <!--Events-->
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+      <nz-card nzTitle="Events">
+        <div formGroupName="events">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="reportDate"
+                  >Report Date</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    formControlName="reportDate"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="12" [nzSm]="24">
+              <nz-form-item>
+                <nz-form-label [nzMd]="6" [nzSm]="24" nzFor="reportTime"
+                  >Report Time</nz-form-label
+                >
+                <nz-form-control
+                  [nzMd]="18"
+                  [nzSm]="24"
+                  nzErrorTip="Should not be blank"
+                >
+                  <nz-time-picker
+                    style="width: 100%"
+                    [ngModel]="time"
+                    [nzUse12Hours]="false"
+                    formControlName="reportTime"
+                  ></nz-time-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzMd]="24" [nzSm]="24">
+              <nz-table
+                class="noHover"
+                nzShowPagination="false"
+                [nzData]="[1, 2, 3, 4]"
+              >
+                <thead>
+                  <tr>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24">Event</nz-form-label>
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24">Comments</nz-form-label>
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24">Time</nz-form-label>
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24">Position</nz-form-label>
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24">Port</nz-form-label>
+                    </th>
+                    <th style="text-align: center">
+                      <nz-form-label [nzSpan]="24" nzFor="action"
+                        >Action</nz-form-label
+                      >
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="events_r_tbody">
+                  <ng-container
+                    formArrayName="eventDetails"
+                    *ngFor="
+                      let item of eventDetailsFormArray.controls;
+                      index as i
+                    "
+                  >
+                    <tr [formGroupName]="i">
+                      <td>
+                        <p>
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <nz-select
+                              nzPlaceHolder="Select"
+                              formControlName="event1"
+                              style="width: 100%"
+                            >
+                              <nz-option
+                                nzValue="Dry Dock"
+                                nzLabel="Dry Dock"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Biofouling"
+                                nzLabel="Biofouling"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Underwater Inspection"
+                                nzLabel="Underwater Inspection"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Intermediate/Special Survey (Class)"
+                                nzLabel="Intermediate/Special Survey (Class)"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="M/E Repairs (Major)"
+                                nzLabel="M/E Repairs (Major)"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="STS Operations"
+                                nzLabel="STS Operations"
+                              ></nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </p>
+                        <p>
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <nz-select
+                              nzPlaceHolder="Select"
+                              formControlName="event2"
+                              style="width: 100%"
+                            >
+                              <nz-option
+                                nzValue="Hull Clean and Propeller Polishing"
+                                nzLabel="Hull Clean and Propeller Polishing"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Hull Clean (only)"
+                                nzLabel="Hull Clean (only)"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Propeller Polishing (only)"
+                                nzLabel="Propeller Polishing (only)"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Minor Clean (Removal of barnacles, sea chest clean)"
+                                nzLabel="Minor Clean (Removal of barnacles, sea chest clean)"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="Minor Clean New Zealand"
+                                nzLabel="Minor Clean New Zealand"
+                              ></nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </p>
+                        <p style="margin-bottom: 0px">
+                          <textarea
+                            nz-input
+                            formControlName="event3"
+                            placeholder="Removal of barnacles, sea chest clean"
+                          ></textarea>
+                        </p>
+                      </td>
+
+                      <td>
+                        <p>
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <textarea
+                              nz-input
+                              formControlName="comment"
+                              placeholder="Comments"
+                            ></textarea>
+                          </nz-form-control>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <nz-date-picker
+                              style="width: 100%"
+                              formControlName="startTime"
+                              nzShowTime
+                              nzFormat="yyyy-MM-dd HH:mm:ss"
+                              nzPlaceHolder="Select"
+                            ></nz-date-picker>
+                          </nz-form-control>
+                        </p>
+                        <p style="margin-bottom: 0px">
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <nz-date-picker
+                              style="width: 100%"
+                              formControlName="endTime"
+                              nzShowTime
+                              nzFormat="yyyy-MM-dd HH:mm:ss"
+                              nzPlaceHolder="Select"
+                            ></nz-date-picker>
+                          </nz-form-control>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <input
+                              nz-input
+                              formControlName="longitude"
+                              type="text"
+                              placeholder="Longitude"
+                          /></nz-form-control>
+                        </p>
+                        <p style="margin-bottom: 0px">
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <input
+                              nz-input
+                              formControlName="latitude"
+                              type="text"
+                              placeholder="Latitude"
+                            />
+                          </nz-form-control>
+                        </p>
+                      </td>
+                      <td>
+                        <p>
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <nz-select
+                              nzPlaceHolder="Select"
+                              formControlName="port"
+                              style="width: 100%"
+                            >
+                              <nz-option
+                                nzValue="port 1"
+                                nzLabel="port 1"
+                              ></nz-option>
+                              <nz-option
+                                nzValue="port 2"
+                                nzLabel="port 2"
+                              ></nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </p>
+                        <p style="margin-bottom: 0px">
+                          <nz-form-control [nzMd]="24" [nzSm]="24">
+                            <input
+                              nz-input
+                              formControlName="otherPort"
+                              type="text"
+                              placeholder="Other Port (if not listed)"
+                            />
+                          </nz-form-control>
+                        </p>
+                      </td>
+
+                      <td>
+                        <button
+                          nz-button
+                          nzType="primary"
+                          nzDanger
+                          *ngIf="eventDetailsFormArray.length > 1"
+                          nz-popconfirm
+                          nzPopconfirmTitle="Are you sure?"
+                          nzPopconfirmPlacement="left"
+                          (nzOnConfirm)="removeEventDetails(i)"
+                        >
+                          <i nz-icon nzType="delete"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr [formGroupName]="i" class="noPaddingTop">
+                      <td colSpan="11">
+                        <div style="padding: 0 8px">
+                          <button class="unlockBtn" nz-button>Unlock</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </nz-table>
+              <nz-divider [nzText]="AddEventtmp"></nz-divider>
+              <ng-template #AddEventtmp>
+                <button
+                  class="addBtn"
+                  nz-button
+                  nzType="primary"
+                  (click)="addEventDetails()"
+                >
+                  Click here to insert new event
+                </button>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <!--Button-->
+
+  <div nz-row nzJustify="end" class="btnAdjust">
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Back
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Print
+    </button>
+    <button nz-button nzType="primary" class="btncls" style="margin-right: 7px">
+      Export
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      (click)="submit()"
+      class="btncls"
+    >
+      Save
+    </button>
+  </div>
+</form>

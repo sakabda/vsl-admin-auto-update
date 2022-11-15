@@ -1,0 +1,20 @@
+<nz-page-header
+  class="site-page-header"
+  [nzTitle]="
+    idForUpdate
+      ? 'Update Aux. Engine Performance'
+      : 'Add New Aux. Engine Performance'
+  "
+>
+  <nz-page-header-extra>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="buttonLoading"
+      class="btncls"
+    >
+      Save
+    </button>
+    <button nz-button class="btncls">Back</button>
+  </nz-page-header-extra>
+</nz-page-header>

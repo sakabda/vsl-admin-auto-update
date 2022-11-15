@@ -1,0 +1,781 @@
+<div class="site-page-header-ghost-wrapper">
+  <nz-page-header class="site-page-header" nzTitle="Daily Reports">
+    <nz-page-header-extra>
+      <a routerLink="/main/machinery-report/daily-report-dashboard"
+        ><button nz-button class="btncls">Add new report</button>
+      </a>
+      <a routerLink="/main/machinery-report/dashboard"
+        ><button nz-button class="btncls">Back</button>
+      </a></nz-page-header-extra
+    >
+  </nz-page-header>
+</div>
+
+<div nz-row nzJustify="end"></div>
+<nz-card>
+  <nz-table
+    #reportTbl
+    [nzData]="allReports"
+    [nzLoading]="loading"
+    [nzTotal]="totalDataCount"
+    [(nzPageSize)]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzShowSizeChanger
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">DATE</th>
+        <th nzWidth="24%">REPORT TYPE</th>
+        <th nzWidth="9%" style="text-align: center">START DATE</th>
+        <th nzWidth="9%" style="text-align: center">START TIME</th>
+        <th nzWidth="5%"></th>
+        <th nzWidth="9%" style="text-align: center">END DATE</th>
+        <th nzWidth="9%" style="text-align: center">END TIME</th>
+
+        <th nzWidth="15%" style="text-align: center">Action</th>
+        <th nzWidth="10%" style="text-align: center">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let data of reportTbl.data; index as i"> -->
+      <tr *ngFor="let data of reportTbl.data; index as i">
+        <td>{{ data.createdAt | date: "dd-MMM-yy" }}</td>
+        <!-- Report type-->
+        <ng-container
+          *ngIf="
+            data.Report_Type === 'Manoeuvring Arrival' &&
+              localUser?.Unique_Group === 'SUPPLY';
+            else reportTypeBlock
+          "
+        >
+          <td>Manoeuvring</td>
+        </ng-container>
+
+        <ng-template #reportTypeBlock>
+          <ng-container>
+            <td>{{ data.Report_Type }}</td>
+          </ng-container>
+        </ng-template>
+        <!-- start date-->
+        <td *ngIf="data.Report_Type === 'At Sea'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Sea_StartDate | date: "dd-MMM-yy" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Fuel Changeover'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Fuel_Changeover_StartDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'At Port'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Port_StartDate | date: "dd-MMM-yy" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'At Anchorage'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_At_Anchorage_StartDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'Drifting'" style="text-align: center">
+          {{
+            data.DailyRept_VslActivity_At_Drifting_StartDate | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Arrival'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Arrival_StartDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Departure'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Departure_StartDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+
+        <!--start time-->
+        <td *ngIf="data.Report_Type === 'At Sea'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Sea_StartTime | date: "HH:mm" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Fuel Changeover'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Fuel_Changeover_StartTime | date: "HH:mm"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'At Port'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Port_StartTime | date: "HH:mm" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'At Anchorage'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_At_Anchorage_StartTime | date: "HH:mm"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'Drifting'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Drifting_StartTime | date: "HH:mm" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Arrival'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Arrival_StartTime
+              | date: "HH:mm"
+          }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Departure'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Departure_StartTime
+              | date: "HH:mm"
+          }}
+        </td>
+        <!-- blank space -->
+        <td></td>
+        <!-- end of blank space -->
+
+        <!--end date-->
+        <td *ngIf="data.Report_Type === 'At Sea'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Sea_EndDate | date: "dd-MMM-yy" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Fuel Changeover'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Fuel_Changeover_EndDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'At Port'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Port_EndDate | date: "dd-MMM-yy" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'At Anchorage'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_At_Anchorage_EndDate | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'Drifting'" style="text-align: center">
+          {{
+            data.DailyRept_VslActivity_At_Drifting_EndDate | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Arrival'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Arrival_EndDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Departure'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Departure_EndDate
+              | date: "dd-MMM-yy"
+          }}
+        </td>
+
+        <!--end time-->
+        <td *ngIf="data.Report_Type === 'At Sea'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Sea_EndTime | date: "HH:mm" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Fuel Changeover'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Fuel_Changeover_EndTime | date: "HH:mm"
+          }}
+        </td>
+        <td *ngIf="data.Report_Type === 'At Port'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Port_EndTime | date: "HH:mm" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'At Anchorage'"
+          style="text-align: center"
+        >
+          {{ data.DailyRept_VslActivity_At_Anchorage_EndTime | date: "HH:mm" }}
+        </td>
+        <td *ngIf="data.Report_Type === 'Drifting'" style="text-align: center">
+          {{ data.DailyRept_VslActivity_At_Drifting_EndTime | date: "HH:mm" }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Arrival'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Arrival_EndTime
+              | date: "HH:mm"
+          }}
+        </td>
+        <td
+          *ngIf="data.Report_Type === 'Manoeuvring Departure'"
+          style="text-align: center"
+        >
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Departure_EndTime
+              | date: "HH:mm"
+          }}
+        </td>
+
+        <td
+          class="action-buttons"
+          style="display: flex; justify-content: center"
+        >
+          <ng-container *ngIf="isAdmin">
+            <!--at sea delete url-->
+            <a
+              *ngIf="data.Report_Type === 'At Sea'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="delete('daily-report-at-seas/', data._id)"
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+            <!--Fuel Changeover delete url-->
+            <a
+              *ngIf="data.Report_Type === 'Fuel Changeover'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="delete('daily-report-fuel-changeovers/', data._id)"
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+
+            <!--At Port delete url-->
+            <a
+              *ngIf="data.Report_Type === 'At Port'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="delete('daily-report-at-ports/', data._id)"
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+            <!--At Anchorage  delete url-->
+            <a
+              *ngIf="data.Report_Type === 'At Anchorage'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="delete('daily-report-at-anchorages/', data._id)"
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+            <!--Drifting  delete url-->
+            <a
+              *ngIf="data.Report_Type === 'Drifting'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="delete('daily-report-at-driftings/', data._id)"
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+            <!--Manoeuvring Arrival   delete url-->
+            <a
+              *ngIf="data.Report_Type === 'Manoeuvring Arrival'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="
+                delete('daily-report-manoeuvring-arrivals/', data._id)
+              "
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+            <!--Manoeuvring Departure   delete url-->
+            <a
+              *ngIf="data.Report_Type === 'Manoeuvring Departure'"
+              style="margin-right: 12px"
+              nzTooltipTitle="Delete"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to delete this?"
+              nzTooltipPlacement="topCenter"
+              nz-tooltip
+              (nzOnConfirm)="
+                delete('daily-report-manoeuvring-departures/', data._id)
+              "
+              ><img style="height: 20px" src="assets/images/delete.png"
+            /></a>
+          </ng-container>
+
+          <!--At sea edit url-->
+          <a
+            *ngIf="data.Report_Type === 'At Sea'"
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-at-sea/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--Fuel Changeover edit url-->
+          <a
+            *ngIf="data.Report_Type === 'Fuel Changeover'"
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-fuel-changeover/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--At Port edit url-->
+          <a
+            *ngIf="data.Report_Type === 'At Port'"
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-at-port/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--At Anchorage edit url-->
+          <a
+            *ngIf="data.Report_Type === 'At Anchorage'"
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-at-anchorage/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--Drifting edit url-->
+          <a
+            *ngIf="data.Report_Type === 'Drifting'"
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-drifting/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--Manoeuvring Arrival edit url-->
+          <a
+            *ngIf="
+              data.Report_Type === 'Manoeuvring Arrival' &&
+              localUser?.Unique_Group != 'SUPPLY'
+            "
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-manoeuvring-arrivals/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--Manoeuvring  edit url for supply vessel-->
+          <a
+            *ngIf="
+              data.Report_Type === 'Manoeuvring Arrival' &&
+              localUser?.Unique_Group === 'SUPPLY'
+            "
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-manoeuvring/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--Manoeuvring Departure edit url-->
+          <a
+            *ngIf="data.Report_Type === 'Manoeuvring Departure'"
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            (click)="
+              onNavigateUrl(
+                'main/machinery-report/daily-report-manoeuvring-departure/update/',
+                data._id
+              )
+            "
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <!--at sea pdf-->
+          <ng-container *ngIf="data.Report_Type === 'At Sea'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineatSeaBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineatSeaBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ atSeaApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a> </ng-container
+            ></ng-template>
+          </ng-container>
+
+          <!--Fuel Changeover  pdf-->
+          <ng-container *ngIf="data.Report_Type === 'Fuel Changeover'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineFuelChangeOverBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineFuelChangeOverBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ fuelChangeOverApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a> </ng-container
+            ></ng-template>
+          </ng-container>
+
+          <!--At Port  pdf-->
+
+          <ng-container *ngIf="data.Report_Type === 'At Port'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ atPortApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a>
+              </ng-container>
+            </ng-template>
+          </ng-container>
+
+          <!--At Anchorage pdf-->
+          <ng-container *ngIf="data.Report_Type === 'At Anchorage'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineAncBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineAncBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ atAnchorageApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a>
+              </ng-container>
+            </ng-template>
+          </ng-container>
+
+          <!--Drifting  pdf-->
+          <ng-container *ngIf="data.Report_Type === 'Drifting'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineDriftBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineDriftBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ driftingApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a> </ng-container
+            ></ng-template>
+          </ng-container>
+
+          <!--Manoeuvring Arrival pdf-->
+          <ng-container *ngIf="data.Report_Type === 'Manoeuvring Arrival'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineManuArrBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineManuArrBlock>
+              <ng-container
+                *ngIf="
+                  data.Report_Type === 'Manoeuvring Arrival' &&
+                    localUser?.Unique_Group != 'SUPPLY';
+                  else supplyPdfBlock
+                "
+              >
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ manoeuvringArrivalApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a> </ng-container
+            ></ng-template>
+            <ng-template #supplyPdfBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ manoeuvringArrivalApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a>
+              </ng-container>
+            </ng-template>
+          </ng-container>
+
+          <!--Manoeuvring Departure pdf-->
+          <ng-container *ngIf="data.Report_Type === 'Manoeuvring Departure'">
+            <ng-container
+              *ngIf="
+                noInternetConnection && isOffline === 'true';
+                else onlineManuDepBlock
+              "
+            >
+              <a
+                style="margin-right: 12px"
+                nzTooltipTitle="Not available when no internet connection"
+                nzTooltipPlacement="topCenter"
+                nzTooltipPlacement="topCenter"
+                nz-tooltip
+                ><img
+                  style="height: 20px"
+                  src="assets/images/Icon_PDF Download.svg"
+              /></a>
+            </ng-container>
+            <ng-template #onlineManuDepBlock>
+              <ng-container>
+                <a
+                  style="margin-right: 12px"
+                  nzTooltipTitle="Download"
+                  nzTooltipPlacement="topCenter"
+                  nz-tooltip
+                  routerLinkActive="router-link-active"
+                  href="{{ serverBaseUrl }}{{ manoeuvringDepartureApiPdfUrl }}{{
+                    data._id
+                  }}?token={{ userToken }}&timezone={{ timeZone }}"
+                  ><img
+                    style="height: 20px"
+                    src="assets/images/Icon_PDF Download.svg"
+                /></a> </ng-container
+            ></ng-template>
+          </ng-container>
+
+          <!-- <a
+            style="margin-right: 12px"
+            nzTooltipTitle="Attach"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            ><img
+              style="height: 20px"
+              src="assets/images/Icon_Mail attachment.svg"
+          /></a>  -->
+          <a
+            nzTooltipTitle="Sync"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            ><img style="height: 20px" src="assets/images/Icon_Sync.svg"
+          /></a>
+        </td>
+        <td style="text-align: center">
+          <span class="active status"></span>
+          <!-- <span *ngIf="data.isValid == false" class="inactive status"></span> -->
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

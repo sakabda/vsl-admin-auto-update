@@ -1,0 +1,173 @@
+<!-- <div class="outerContainer">
+  <div nz-row class="logbxaligned">
+    <div nz-col [nzMd]="8" [nzSm]="24"></div>
+    <div nz-col [nzMd]="8" [nzSm]="24">
+      <div class="logareabox">
+        <div style="width: 100%">
+          <h4>PANGIA</h4>
+          <nz-card class="loginCard">
+            <div class="loginerbox">
+              <div class="leftlogbox">
+                <div class="logo-area">
+                  <h5>Sign in to account</h5>
+                </div>
+                <form
+                  nz-form
+                  [formGroup]="loginForm"
+                  class="login-form"
+                  autocomplete="off"
+                >
+                  <nz-form-item>
+                    <nz-form-control
+                      nzErrorTip="Please input your email!"
+                      [nzErrorTip]="errorTplEmail"
+                    >
+                      <nz-input-group nzPrefixIcon="user">
+                        <input
+                          type="text"
+                          nz-input
+                          formControlName="userName"
+                          placeholder="Username"
+                          autocomplete="one-time-code"
+                        />
+                        <ng-template #errorTplEmail let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Please input your username
+                          </ng-container>
+                          
+                        </ng-template>
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your Password!">
+                      <nz-input-group nzPrefixIcon="lock">
+                        <input
+                          type="password"
+                          nz-input
+                          formControlName="password"
+                          placeholder="Password"
+                          autocomplete="one-time-code"
+                        />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <ng-container *ngIf="errorMessage">
+                    <span style="color: red">
+                      username and password should be correct.
+                    </span></ng-container
+                  >
+
+                  <div nz-col [nzSpan]="24" class="login-button">
+                    <button
+                      nz-button
+                      class="login-form-button login-form-margin"
+                      [nzType]="'primary'"
+                      (click)="submitLoginForm()"
+                      [nzLoading]="isLoading"
+                    >
+                      Sign In
+                    </button>
+                  </div>
+                 
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+    <div nz-col [nzMd]="8" [nzSm]="24"></div>
+  </div>
+</div> -->
+<div class="outerContainer">
+  <div nz-row class="logbxaligned">
+    <div nz-col [nzMd]="9" [nzSm]="24"></div>
+    <div nz-col [nzMd]="6" [nzSm]="24">
+      <div class="logareabox">
+        <div>
+          <!-- <h4>PANGIA</h4> style="width: 100%"-->
+          <nz-card class="loginCard">
+            <div class="loginerbox">
+              <div class="leftlogbox">
+                <div class="logo-area">
+                  <img src="assets/images/Picture4.png" alt="" />
+                  <!-- <h5>Sign in to account</h5> -->
+                </div>
+                <form
+                  nz-form
+                  [formGroup]="loginForm"
+                  class="login-form"
+                  autocomplete="off"
+                >
+                  <nz-form-item>
+                    <nz-form-control
+                      nzErrorTip="Please input your email!"
+                      [nzErrorTip]="errorTplEmail"
+                    >
+                      <nz-input-group nzPrefixIcon="user">
+                        <input
+                          type="text"
+                          nz-input
+                          formControlName="userName"
+                          placeholder="Username"
+                          autocomplete="one-time-code"
+                          class="user-icon"
+                        />
+                        <ng-template #errorTplEmail let-control>
+                          <ng-container *ngIf="control.hasError('required')">
+                            Please input your username
+                          </ng-container>
+                          <!-- <ng-container *ngIf="control.hasError('pattern')">
+                            Please input a valid username
+                          </ng-container> -->
+                        </ng-template>
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your Password!">
+                      <nz-input-group nzPrefixIcon="lock">
+                        <input
+                          type="password"
+                          nz-input
+                          formControlName="password"
+                          placeholder="Password"
+                          autocomplete="one-time-code"
+                          class="password-icon"
+                        />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <ng-container *ngIf="errorMessage">
+                    <span style="color: red">
+                      username and password should be correct.
+                    </span></ng-container
+                  >
+
+                  <div nz-col [nzSpan]="24" class="login-button">
+                    <button
+                      nz-button
+                      class="login-form-button login-form-margin"
+                      [nzType]="'primary'"
+                      (click)="submitLoginForm()"
+                      [nzLoading]="isLoading"
+                    >
+                      Login
+                    </button>
+                  </div>
+                  <!-- <div nz-row class="login-form-margin">
+                    <div nz-col [nzSpan]="24" class="login-form-forgot">
+                      <a>Forgot password ?</a>
+                    </div>
+                  </div> -->
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+    <div nz-col [nzMd]="8" [nzSm]="24"></div>
+  </div>
+</div>

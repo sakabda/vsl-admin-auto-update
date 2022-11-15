@@ -1,0 +1,59 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+::ng-deep {
+  .ant-table table {
+    background-color: #f2f1f1 !important;
+  }
+  // .ant-table-tbody:hover {
+  //   background-color: #f2f1f1 !important;
+  // }
+
+  th {
+    margin: 0px -1px 1px 0px;
+    padding: 5px 0 0 0 !important;
+    background: rgba(133, 213, 240, 0.3);
+
+    height: 35px;
+    -webkit-box-shadow: 0px 5px 7px -2px rgb(0 0 0 / 75%);
+    -moz-box-shadow: 0px 5px 7px -2px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 5px 7px -2px rgb(0 0 0 / 75%);
+    text-align: center;
+  }
+  .addBtn {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  .addBtn:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+
+  .saveButton {
+    color: #fff;
+    background-color: #3b6998;
+    border-color: #386491;
+  }
+  .saveButton:hover {
+    color: #fff;
+    background-color: #30567c;
+    border-color: #2a4b6c;
+  }
+}
+
+.ant-table-tbody > tr > td {
+  padding: 16px 0;
+}
+
+nz-date-picker {
+  width: 100%;
+}
+.events_r_tbody tr td {
+  vertical-align: top;
+}

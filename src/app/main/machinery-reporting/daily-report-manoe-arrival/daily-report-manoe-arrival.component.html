@@ -1,0 +1,112 @@
+<div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Daily Reports </nz-page-header-title>
+    <nz-page-header-extra>
+      <button
+        nz-button
+        [routerLink]="['add']"
+        routerLinkActive="router-link-active"
+        class="btncls"
+      >
+        Add new report
+      </button>
+      <a routerLink="/main/machinery-report/daily-report">
+        <button nz-button class="btncls">Back</button></a
+      >
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div nz-row nzJustify="end"></div>
+<nz-card>
+  <nz-table
+    #reportTbl
+    [nzData]="allReports"
+    [nzLoading]="loading"
+    [nzTotal]="totalDataCount"
+    [(nzPageSize)]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzShowSizeChanger
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10%">DATE</th>
+        <th nzWidth="25%">Voyage Number</th>
+        <th nzWidth="10%" style="text-align: center">Manoeuvring Arrival</th>
+        <th nzWidth="15%" style="text-align: center">Action</th>
+        <th nzWidth="10%" style="text-align: center">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of reportTbl.data; index as i">
+        <td>{{ data.createdAt | date: "dd-MMM-yy" }}</td>
+        <td>{{ data.DailyRept_ManoeuvringArrival_VoyDetails_VoyNo }}</td>
+        <td style="text-align: center">
+          {{
+            data.DailyRept_VslActivity_Manoeuvring_Arrival_StartTime
+              | date: "hh:mm"
+          }}
+        </td>
+
+        <td
+          class="action-buttons"
+          style="display: flex; justify-content: center"
+        >
+          <a
+            style="margin-right: 12px"
+            *ngIf="isAdmin"
+            nzTooltipTitle="Delete"
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure to delete this?"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            (nzOnConfirm)="delete(data._id)"
+            ><img style="height: 20px" src="assets/images/delete.png"
+          /></a>
+          <a
+            style="margin-right: 12px"
+            nzTooltipTitle="Edit"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            [routerLink]="['update', data._id]"
+            ><img style="height: 20px" src="assets/images/Icon_Edit.svg"
+          /></a>
+          <a
+            style="margin-right: 12px"
+            nzTooltipTitle="Download"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            ><img
+              style="height: 20px"
+              src="assets/images/Icon_PDF Download.svg"
+          /></a>
+          <!-- <a
+            style="margin-right: 12px"
+            nzTooltipTitle="Attach"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            ><img
+              style="height: 20px"
+              src="assets/images/Icon_Mail attachment.svg"
+          /></a> -->
+          <a
+            nzTooltipTitle="Sync"
+            nzTooltipPlacement="topCenter"
+            nz-tooltip
+            routerLinkActive="router-link-active"
+            ><img style="height: 20px" src="assets/images/Icon_Sync.svg"
+          /></a>
+        </td>
+        <td style="text-align: center">
+          <span class="active status"></span>
+          <!-- <span *ngIf="data.isValid == false" class="inactive status"></span> -->
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

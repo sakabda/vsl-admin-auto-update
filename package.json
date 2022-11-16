@@ -25,7 +25,11 @@
     "pack": "build --dir",
     "deploy": "electron-builder build  --l --publish always"
   },
-  "repository": "https://github.com/sakabda/vsl-admin-auto-update",
+
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/sakabda/vsl-admin-auto-update.git"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.4",

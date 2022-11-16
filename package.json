@@ -105,7 +105,14 @@
     "files": [
       "**/*",
       "dist/**/*"
-    ]
+    ],
+    "publish": [
+      {
+          "provider": "github",
+          "owner": "sakabda",
+          "repo": "vsl-admin-auto-update",
+          "token": "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"
+      }]
    
   }
 }

@@ -9,6 +9,10 @@
     "email": "vslmarine@gmail.com"
   },
   "icon": "favicon.ico",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/sakabda/vsl-admin-auto-update.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,10 +30,7 @@
     "deploy": "electron-builder build  --l --publish always"
   },
 
-  "repository": {
-    "type" : "git",
-    "url" : "https://github.com/sakabda/vsl-admin-auto-update.git"
-  },
+  
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.4",
@@ -104,13 +105,7 @@
     "files": [
       "**/*",
       "dist/**/*"
-    ],
-    "publish": [
-      {
-          "provider": "github",
-          "owner": "sakabda",
-          "repo": "vsl-admin-auto-update",
-          "token": "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"
-      }]
+    ]
+   
   }
 }

@@ -86,18 +86,21 @@ ipcMain.on("error", (event, args) => {
 /*checking for updates*/
 autoUpdater.on("checking-for-update", () => {
   //your code
+  log.info("checking-for-update");
   mainWindow.webContents.send("checking-for-update");
 });
 
 /*No updates available*/
 autoUpdater.on("update-not-available", (info) => {
   //your code
+  log.info("update-not-available");
   mainWindow.webContents.send("update-not-available");
 });
 
 /*New Update Available*/
 autoUpdater.on("update-available", (info) => {
   //your code
+  log.info("update-available");
   mainWindow.webContents.send("update-available");
   //autoUpdater.autoDownload();
 });
@@ -105,12 +108,14 @@ autoUpdater.on("update-available", (info) => {
 /*Download Status Report*/
 autoUpdater.on("download-progress", (progressObj) => {
   //your code
+  log.info("download-progress");
   mainWindow.webContents.send("download-progress");
 });
 
 /*Download Completion Message*/
 autoUpdater.on("update-downloaded", (info) => {
   //your code
+  log.info("update-downloaded");
   mainWindow.webContents.send("update-downloaded");
 });
 autoUpdater.on("error", (err) => {

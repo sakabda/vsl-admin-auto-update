@@ -19,7 +19,7 @@
     "build-prod": "ng build --prod",
     "start:electron": "ng build --prod --base-href ./ && electron .",
     "postinstall": "patch-package",
-    "dist-64": "electron-builder -w",
+    "dist-64": "electron-builder -w --publish always",
     "dist-32": "electron-builder -w --ia32",
     "dist-lin": "electron-builder -l",
     "pack": "build --dir",
@@ -87,6 +87,9 @@
     "mac": {
       "target": "pkg"
     },
+    "linux": {
+      "target": "AppImage"
+    },
     "portable": {
       "artifactName": "vsl-reporting-suite.exe"
     },
@@ -102,7 +105,8 @@
       {
           "provider": "github",
           "owner": "sakabda",
-          "repo": "vsl-admin-auto-update"
+          "repo": "vsl-admin-auto-update",
+          "token": "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"
       }]
   }
 }

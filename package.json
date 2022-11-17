@@ -11,7 +11,7 @@
   "icon": "favicon.ico",
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/sakabda/vsl-admin-auto-update.git"
+    "url" : "https://github.com/sakabda/vsl-admin-auto-update/"
   },
   "scripts": {
     "ng": "ng",

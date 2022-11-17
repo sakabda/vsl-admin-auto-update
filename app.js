@@ -1,8 +1,8 @@
+const { autoUpdater } = require("electron-updater");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const url = require("url");
 const path = require("path");
 const electronLog = require("electron-log");
-const { autoUpdater } = require("electron-updater");
 
 let mainWindow;
 let splash;

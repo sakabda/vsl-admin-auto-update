@@ -9,10 +9,7 @@
     "email": "vslmarine@gmail.com"
   },
   "icon": "favicon.ico",
-  "repository": {
-    "type" : "git",
-    "url" : "https://github.com/sakabda/vsl-admin-auto-update/"
-  },
+  "repository": "https://github.com/sakabda/vsl-admin-auto-update",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -111,7 +108,9 @@
           "provider": "github",
           "owner": "sakabda",
           "repo": "vsl-admin-auto-update",
-          "token": "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"
+          "token": "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",
+          "publishAutoUpdate": true,
+          "GH_TOKEN": "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"
       }]
    
   }

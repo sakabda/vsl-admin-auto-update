@@ -108,9 +108,8 @@
           "provider": "github",
           "owner": "sakabda",
           "repo": "vsl-admin-auto-update",
-          "token": "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",
-          "publishAutoUpdate": true,
-          "GH_TOKEN": "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"
+          "token": "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"
+          
       }]
    
   }
